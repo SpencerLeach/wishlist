@@ -10,20 +10,20 @@
   },
   {
     "id": 2,
-    "name": "Mastering Positional Chess",
+    "name": "Mastering Positional Chess (Kindle)",
     "description": "By Daniel Naroditsky. Practical lessons on prophylaxis, defense, fortresses, and positional sacrifice.",
-    "price": "$25",
-    "link": "https://www.amazon.com/Mastering-Positional-Chess-Daniel-Naroditsky/dp/9056913107",
-    "image": "https://via.placeholder.com/200x200/9932cc/ffffff?text=Chess+Book",
+    "price": "$15",
+    "link": "https://www.amazon.com/Mastering-Positional-Chess-Practical-Champion-ebook/dp/B0131MASFU",
+    "image": "https://m.media-amazon.com/images/I/41BzSRIDTzL._SY445_SX342_.jpg",
     "priority": "low"
   },
   {
     "id": 3,
-    "name": "Mastering Complex Endgames",
+    "name": "Mastering Complex Endgames (Kindle)",
     "description": "By Daniel Naroditsky. Practical lessons on critical endgame ideas and plans.",
-    "price": "$28",
-    "link": "https://www.amazon.com/Mastering-Complex-Endgames-Practical-Critical/dp/9056914057",
-    "image": "https://via.placeholder.com/200x200/ff69b4/ffffff?text=Chess+Book",
+    "price": "$18",
+    "link": "https://www.amazon.com/Mastering-Complex-Endgames-Practical-Critical-ebook/dp/B00IXYGAXG",
+    "image": "https://m.media-amazon.com/images/I/41npGdRH8CL._SY445_SX342_.jpg",
     "priority": "low"
   }
 ]
