@@ -98,6 +98,27 @@ header {
   text-shadow: 1px 1px 2px black;
 }
 
+/* Interests box */
+.interests-box {
+  background: linear-gradient(135deg, rgba(153, 50, 204, 0.3) 0%, rgba(255, 105, 180, 0.2) 100%);
+  border: 2px dashed var(--pink);
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.interests-box p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.interests-box .interest {
+  color: var(--cyan);
+  font-weight: bold;
+}
+
 /* Navigation buttons */
 .nav-buttons {
   display: flex;
