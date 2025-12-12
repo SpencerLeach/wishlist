@@ -394,13 +394,15 @@ footer {
 }
 
 .guestbook-link a,
-.friend-link a {
+.friend-link a,
+.donate-link a {
   color: var(--cyan);
   text-decoration: underline;
 }
 
 .guestbook-link a:hover,
-.friend-link a:hover {
+.friend-link a:hover,
+.donate-link a:hover {
   color: var(--pink);
 }
 
