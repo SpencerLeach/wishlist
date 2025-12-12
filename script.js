@@ -4,9 +4,6 @@
 // Store wishlist items globally
 let wishlistItems = [];
 
-// Store guestbook messages globally
-let guestbookMessages = [];
-
 // Load wishlist data when page loads
 document.addEventListener('DOMContentLoaded', function() {
   loadWishlist();
@@ -189,111 +186,172 @@ function activatePartyMode() {
   }, 10000);
 }
 
-// ==================== GUESTBOOK ====================
+// ==================== GUESTBOOK CANVAS ====================
 
-// Load guestbook entries
+const CANVAS_COLS = 60;
+const CANVAS_ROWS = 18;
+let canvasGrid = [];
+let cursorX = 0;
+let cursorY = 0;
+let cursorElement = null;
+let saveTimeout = null;
+
+// Initialize empty canvas grid
+function initCanvasGrid() {
+  canvasGrid = [];
+  for (let y = 0; y < CANVAS_ROWS; y++) {
+    canvasGrid[y] = [];
+    for (let x = 0; x < CANVAS_COLS; x++) {
+      canvasGrid[y][x] = ' ';
+    }
+  }
+}
+
+// Load guestbook canvas
 async function loadGuestbook() {
-  const container = document.getElementById('guestbook-entries');
+  const canvas = document.getElementById('guestbook-canvas');
+  initCanvasGrid();
 
   try {
     const response = await fetch('guestbook.php');
-    if (!response.ok) throw new Error('Failed to load');
-
-    const data = await response.json();
-    guestbookMessages = data.messages || [];
-    renderGuestbook();
+    if (response.ok) {
+      const data = await response.json();
+      if (data.grid && Array.isArray(data.grid)) {
+        // Load saved grid
+        for (let y = 0; y < Math.min(data.grid.length, CANVAS_ROWS); y++) {
+          for (let x = 0; x < Math.min(data.grid[y].length, CANVAS_COLS); x++) {
+            canvasGrid[y][x] = data.grid[y][x] || ' ';
+          }
+        }
+      }
+    }
   } catch (error) {
     console.error('Error loading guestbook:', error);
-    container.innerHTML = '<p style="color: #9999cc; text-align: center;">Could not load guestbook</p>';
   }
+
+  renderCanvas();
+  setupCanvasEvents();
 }
 
-// Render guestbook entries
-function renderGuestbook() {
-  const container = document.getElementById('guestbook-entries');
+// Render the canvas grid
+function renderCanvas() {
+  const canvas = document.getElementById('guestbook-canvas');
 
-  if (guestbookMessages.length === 0) {
-    container.innerHTML = '<p style="color: #9999cc; text-align: center;">No messages yet. Be the first to sign!</p>';
-    return;
+  // Build text content
+  let content = '';
+  for (let y = 0; y < CANVAS_ROWS; y++) {
+    for (let x = 0; x < CANVAS_COLS; x++) {
+      content += canvasGrid[y][x];
+    }
+    if (y < CANVAS_ROWS - 1) content += '\n';
   }
 
-  // Show newest first
-  const reversed = [...guestbookMessages].reverse();
+  canvas.textContent = content;
 
-  container.innerHTML = reversed.map((msg, index) => `
-    <div class="guestbook-entry">
-      <button class="delete-btn" onclick="deleteGuestbookEntry(${guestbookMessages.length - 1 - index})">✕</button>
-      <div class="entry-header">
-        <span class="entry-name">✨ ${msg.name}</span>
-        <span class="entry-date">${msg.date}</span>
-      </div>
-      <p class="entry-text">${msg.text}</p>
-    </div>
-  `).join('');
+  // Add cursor
+  if (!cursorElement) {
+    cursorElement = document.createElement('div');
+    cursorElement.className = 'canvas-cursor';
+    canvas.appendChild(cursorElement);
+  }
+  updateCursorPosition();
 }
 
-// Add a new guestbook entry
-async function addGuestbookEntry() {
-  const nameInput = document.getElementById('guest-name');
-  const messageInput = document.getElementById('guest-message');
-
-  const name = nameInput.value.trim() || 'Anonymous';
-  const text = messageInput.value.trim();
-
-  if (!text) {
-    alert('Please write a message!');
-    return;
-  }
-
-  const newEntry = {
-    name: name,
-    text: text,
-    date: new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  };
-
-  guestbookMessages.push(newEntry);
-
-  try {
-    await saveGuestbook();
-    renderGuestbook();
-    nameInput.value = '';
-    messageInput.value = '';
-  } catch (error) {
-    console.error('Error saving guestbook:', error);
-    alert('Could not save message. Try again!');
-    guestbookMessages.pop();
-  }
+// Update cursor visual position
+function updateCursorPosition() {
+  if (!cursorElement) return;
+  const charWidth = 8.4;  // Approximate monospace char width
+  const lineHeight = 16.8; // Line height
+  cursorElement.style.left = (10 + cursorX * charWidth) + 'px';
+  cursorElement.style.top = (10 + cursorY * lineHeight) + 'px';
 }
 
-// Delete a guestbook entry
-async function deleteGuestbookEntry(index) {
-  if (!confirm('Delete this message?')) return;
+// Setup canvas event listeners
+function setupCanvasEvents() {
+  const canvas = document.getElementById('guestbook-canvas');
 
-  const removed = guestbookMessages.splice(index, 1);
+  // Click to position cursor
+  canvas.addEventListener('click', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left - 10;
+    const y = e.clientY - rect.top - 10;
 
-  try {
-    await saveGuestbook();
-    renderGuestbook();
-  } catch (error) {
-    console.error('Error saving guestbook:', error);
-    alert('Could not delete message. Try again!');
-    guestbookMessages.splice(index, 0, removed[0]);
-  }
-}
+    const charWidth = 8.4;
+    const lineHeight = 16.8;
 
-// Save guestbook to server
-async function saveGuestbook() {
-  const response = await fetch('guestbook.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: guestbookMessages })
+    cursorX = Math.max(0, Math.min(CANVAS_COLS - 1, Math.floor(x / charWidth)));
+    cursorY = Math.max(0, Math.min(CANVAS_ROWS - 1, Math.floor(y / lineHeight)));
+
+    updateCursorPosition();
+    canvas.focus();
   });
 
-  if (!response.ok) throw new Error('Failed to save');
+  // Keyboard input
+  canvas.addEventListener('keydown', function(e) {
+    // Prevent default for most keys
+    if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete' ||
+        e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'ArrowDown' ||
+        e.key === 'Enter') {
+      e.preventDefault();
+    }
+
+    if (e.key === 'Backspace') {
+      // Move back and delete
+      if (cursorX > 0) {
+        cursorX--;
+      } else if (cursorY > 0) {
+        cursorY--;
+        cursorX = CANVAS_COLS - 1;
+      }
+      canvasGrid[cursorY][cursorX] = ' ';
+      scheduleAutoSave();
+    } else if (e.key === 'Delete') {
+      canvasGrid[cursorY][cursorX] = ' ';
+      scheduleAutoSave();
+    } else if (e.key === 'ArrowLeft') {
+      if (cursorX > 0) cursorX--;
+    } else if (e.key === 'ArrowRight') {
+      if (cursorX < CANVAS_COLS - 1) cursorX++;
+    } else if (e.key === 'ArrowUp') {
+      if (cursorY > 0) cursorY--;
+    } else if (e.key === 'ArrowDown') {
+      if (cursorY < CANVAS_ROWS - 1) cursorY++;
+    } else if (e.key === 'Enter') {
+      if (cursorY < CANVAS_ROWS - 1) {
+        cursorY++;
+        cursorX = 0;
+      }
+    } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+      // Type character
+      canvasGrid[cursorY][cursorX] = e.key;
+      cursorX++;
+      if (cursorX >= CANVAS_COLS) {
+        cursorX = 0;
+        if (cursorY < CANVAS_ROWS - 1) cursorY++;
+      }
+      scheduleAutoSave();
+    }
+
+    renderCanvas();
+  });
+}
+
+// Auto-save after typing stops
+function scheduleAutoSave() {
+  if (saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(saveCanvas, 1000);
+}
+
+// Save canvas to server
+async function saveCanvas() {
+  try {
+    const response = await fetch('guestbook.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ grid: canvasGrid })
+    });
+    if (!response.ok) throw new Error('Failed to save');
+  } catch (error) {
+    console.error('Error saving canvas:', error);
+  }
 }

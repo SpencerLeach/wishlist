@@ -52,16 +52,12 @@
       </div>
     </main>
 
-    <!-- Guestbook -->
+    <!-- Guestbook Canvas -->
     <section class="guestbook-section">
-      <h2>📝 Sign My Guestbook! 📝</h2>
-      <div class="guestbook-form">
-        <input type="text" id="guest-name" placeholder="Your name..." maxlength="50">
-        <textarea id="guest-message" placeholder="Leave a message!" maxlength="500"></textarea>
-        <button class="y2k-button" onclick="addGuestbookEntry()">✨ Sign! ✨</button>
-      </div>
-      <div id="guestbook-entries" class="guestbook-entries">
-        <!-- Entries loaded via JS -->
+      <h2>📝 Guestbook Wall 📝</h2>
+      <p class="canvas-instructions">Click anywhere and start typing! Backspace to delete.</p>
+      <div id="guestbook-canvas" class="guestbook-canvas" tabindex="0">
+        <!-- Canvas content loaded via JS -->
       </div>
     </section>
 
