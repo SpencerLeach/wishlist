@@ -52,11 +52,21 @@
       </div>
     </main>
 
+    <!-- Guestbook -->
+    <section class="guestbook-section">
+      <h2>📝 Sign My Guestbook! 📝</h2>
+      <div class="guestbook-form">
+        <input type="text" id="guest-name" placeholder="Your name..." maxlength="50">
+        <textarea id="guest-message" placeholder="Leave a message!" maxlength="500"></textarea>
+        <button class="y2k-button" onclick="addGuestbookEntry()">✨ Sign! ✨</button>
+      </div>
+      <div id="guestbook-entries" class="guestbook-entries">
+        <!-- Entries loaded via JS -->
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-      <div class="guestbook-link">
-        <p>Sign my <a href="#">guestbook</a>! (jk lol)</p>
-      </div>
       <div class="footer-graphics">
         <span class="blink">♥</span> Made with love <span class="blink">♥</span>
       </div>

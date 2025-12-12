@@ -4,9 +4,13 @@
 // Store wishlist items globally
 let wishlistItems = [];
 
+// Store guestbook messages globally
+let guestbookMessages = [];
+
 // Load wishlist data when page loads
 document.addEventListener('DOMContentLoaded', function() {
   loadWishlist();
+  loadGuestbook();
   initSparkleTrail();
   setLastUpdated();
   randomizeVisitorCount();
@@ -183,4 +187,113 @@ function activatePartyMode() {
   setTimeout(() => {
     document.body.style.animation = '';
   }, 10000);
+}
+
+// ==================== GUESTBOOK ====================
+
+// Load guestbook entries
+async function loadGuestbook() {
+  const container = document.getElementById('guestbook-entries');
+
+  try {
+    const response = await fetch('guestbook.php');
+    if (!response.ok) throw new Error('Failed to load');
+
+    const data = await response.json();
+    guestbookMessages = data.messages || [];
+    renderGuestbook();
+  } catch (error) {
+    console.error('Error loading guestbook:', error);
+    container.innerHTML = '<p style="color: #9999cc; text-align: center;">Could not load guestbook</p>';
+  }
+}
+
+// Render guestbook entries
+function renderGuestbook() {
+  const container = document.getElementById('guestbook-entries');
+
+  if (guestbookMessages.length === 0) {
+    container.innerHTML = '<p style="color: #9999cc; text-align: center;">No messages yet. Be the first to sign!</p>';
+    return;
+  }
+
+  // Show newest first
+  const reversed = [...guestbookMessages].reverse();
+
+  container.innerHTML = reversed.map((msg, index) => `
+    <div class="guestbook-entry">
+      <button class="delete-btn" onclick="deleteGuestbookEntry(${guestbookMessages.length - 1 - index})">✕</button>
+      <div class="entry-header">
+        <span class="entry-name">✨ ${msg.name}</span>
+        <span class="entry-date">${msg.date}</span>
+      </div>
+      <p class="entry-text">${msg.text}</p>
+    </div>
+  `).join('');
+}
+
+// Add a new guestbook entry
+async function addGuestbookEntry() {
+  const nameInput = document.getElementById('guest-name');
+  const messageInput = document.getElementById('guest-message');
+
+  const name = nameInput.value.trim() || 'Anonymous';
+  const text = messageInput.value.trim();
+
+  if (!text) {
+    alert('Please write a message!');
+    return;
+  }
+
+  const newEntry = {
+    name: name,
+    text: text,
+    date: new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  };
+
+  guestbookMessages.push(newEntry);
+
+  try {
+    await saveGuestbook();
+    renderGuestbook();
+    nameInput.value = '';
+    messageInput.value = '';
+  } catch (error) {
+    console.error('Error saving guestbook:', error);
+    alert('Could not save message. Try again!');
+    guestbookMessages.pop();
+  }
+}
+
+// Delete a guestbook entry
+async function deleteGuestbookEntry(index) {
+  if (!confirm('Delete this message?')) return;
+
+  const removed = guestbookMessages.splice(index, 1);
+
+  try {
+    await saveGuestbook();
+    renderGuestbook();
+  } catch (error) {
+    console.error('Error saving guestbook:', error);
+    alert('Could not delete message. Try again!');
+    guestbookMessages.splice(index, 0, removed[0]);
+  }
+}
+
+// Save guestbook to server
+async function saveGuestbook() {
+  const response = await fetch('guestbook.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: guestbookMessages })
+  });
+
+  if (!response.ok) throw new Error('Failed to save');
 }
