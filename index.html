@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>~*~ My Wish List ~*~</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Sparkle cursor trail effect -->
+  <div id="sparkle-container"></div>
+
+  <div class="page-wrapper">
+    <!-- Header with classic Y2K vibes -->
+    <header>
+      <div class="stars-decoration">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
+      <h1 class="rainbow-text">~*~ My Wish List ~*~</h1>
+      <div class="stars-decoration">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
+      <marquee behavior="scroll" direction="left" class="marquee-banner">
+        ♥ Welcome to my wishlist page! ♥ Thanks for stopping by! ♥ Pick something nice for me! ♥ You're visitor #<span id="visitor-count">1337</span>! ♥
+      </marquee>
+    </header>
+
+    <!-- Navigation buttons -->
+    <nav class="nav-buttons">
+      <button class="y2k-button" onclick="filterItems('all')">★ All Items ★</button>
+      <button class="y2k-button" onclick="filterItems('high')">🔥 Top Picks 🔥</button>
+      <button class="y2k-button" onclick="filterItems('medium')">💖 Would Love 💖</button>
+      <button class="y2k-button" onclick="filterItems('low')">✨ Nice 2 Have ✨</button>
+    </nav>
+
+    <!-- Main content area -->
+    <main>
+      <div class="section-header">
+        <img src="https://web.archive.org/web/20091027065852/http://hk.geocities.com/pinkfong_pinkfong/new.gif" alt="new" onerror="this.style.display='none'">
+        <h2>~ What I Want ~</h2>
+        <img src="https://web.archive.org/web/20091027065852/http://hk.geocities.com/pinkfong_pinkfong/new.gif" alt="new" onerror="this.style.display='none'">
+      </div>
+
+      <div id="wishlist-container" class="wishlist-grid">
+        <!-- Items loaded via JavaScript -->
+        <div class="loading">
+          <p>~*~ Loading my wishlist ~*~</p>
+          <img src="https://web.archive.org/web/20091027065852/http://geocities.com/junglefever_02/loadingbar.gif" alt="loading" onerror="this.outerHTML='⏳ Loading...'">
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="guestbook-link">
+        <p>Sign my <a href="#">guestbook</a>! (jk lol)</p>
+      </div>
+      <div class="footer-graphics">
+        <span class="blink">♥</span> Made with love <span class="blink">♥</span>
+      </div>
+      <div class="best-viewed">
+        <p>Best viewed in Internet Explorer 6.0</p>
+        <p>© 2024 - Last updated: <span id="last-updated"></span></p>
+      </div>
+      <div class="under-construction">
+        <p>🚧 Always under construction 🚧</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

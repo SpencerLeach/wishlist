@@ -1,0 +1,396 @@
+/* ~*~ Y2K WISHLIST STYLES ~*~ */
+/* Best viewed at 800x600 resolution!! */
+
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+/* CSS Variables for easy customization */
+:root {
+  --pink: #ff69b4;
+  --hot-pink: #ff1493;
+  --cyan: #00ffff;
+  --purple: #9932cc;
+  --yellow: #ffff00;
+  --lime: #00ff00;
+  --blue: #0066ff;
+}
+
+/* Tiled background - classic Y2K */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+  background-color: #000033;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255, 105, 180, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(153, 50, 204, 0.1) 10px,
+      rgba(153, 50, 204, 0.1) 20px
+    );
+  min-height: 100vh;
+  color: #ffffff;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">✨</text></svg>'), auto;
+}
+
+.page-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header styles */
+header {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(180deg, #330066 0%, #000033 100%);
+  border: 3px ridge var(--cyan);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow:
+    0 0 10px var(--pink),
+    inset 0 0 30px rgba(153, 50, 204, 0.3);
+}
+
+.stars-decoration {
+  color: var(--yellow);
+  font-size: 1.2rem;
+  letter-spacing: 5px;
+  animation: twinkle 1s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+/* Rainbow text effect */
+.rainbow-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-shift 3s linear infinite;
+  text-shadow: none;
+  margin: 10px 0;
+}
+
+@keyframes rainbow-shift {
+  to { background-position: 200% center; }
+}
+
+/* Marquee banner */
+.marquee-banner {
+  background: linear-gradient(90deg, var(--hot-pink), var(--purple), var(--hot-pink));
+  padding: 8px;
+  margin-top: 15px;
+  border: 2px inset var(--pink);
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.y2k-button {
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, #6666ff 0%, #3333cc 50%, #6666ff 100%);
+  border: 3px outset #9999ff;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px #000033;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s;
+}
+
+.y2k-button:hover {
+  background: linear-gradient(180deg, #9999ff 0%, #6666ff 50%, #9999ff 100%);
+  transform: scale(1.05);
+}
+
+.y2k-button:active {
+  border-style: inset;
+  transform: scale(0.98);
+}
+
+/* Section header */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  color: var(--cyan);
+  text-shadow: 0 0 10px var(--cyan), 2px 2px 0 var(--purple);
+  margin: 0;
+}
+
+.section-header img {
+  height: 30px;
+}
+
+/* Wishlist grid */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Individual item cards */
+.wishlist-item {
+  background: linear-gradient(135deg, #1a0033 0%, #330066 50%, #1a0033 100%);
+  border: 3px ridge var(--pink);
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow:
+    0 0 15px rgba(255, 105, 180, 0.5),
+    inset 0 0 20px rgba(153, 50, 204, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.wishlist-item::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%
+  );
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  from { transform: translateX(-100%) rotate(45deg); }
+  to { transform: translateX(100%) rotate(45deg); }
+}
+
+.wishlist-item:hover {
+  transform: scale(1.03) rotate(1deg);
+  box-shadow:
+    0 0 25px rgba(255, 105, 180, 0.8),
+    0 0 50px rgba(0, 255, 255, 0.3);
+}
+
+/* Priority badges */
+.priority-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.priority-high {
+  background: linear-gradient(90deg, #ff0000, #ff6600);
+  color: white;
+  animation: pulse 1s infinite;
+}
+
+.priority-medium {
+  background: linear-gradient(90deg, var(--hot-pink), var(--pink));
+  color: white;
+}
+
+.priority-low {
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  color: black;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Item image */
+.item-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px groove var(--cyan);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: #ffffff;
+}
+
+/* Item details */
+.item-name {
+  color: var(--yellow);
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  text-shadow: 1px 1px 3px var(--purple);
+}
+
+.item-description {
+  color: #ffccff;
+  font-size: 0.9rem;
+  margin: 5px 0;
+  font-style: italic;
+}
+
+.item-price {
+  color: var(--lime);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  text-shadow: 0 0 5px var(--lime);
+}
+
+.item-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 20px;
+  background: linear-gradient(180deg, var(--hot-pink) 0%, #cc0066 100%);
+  color: white;
+  text-decoration: none;
+  border: 2px outset var(--pink);
+  border-radius: 20px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.item-link:hover {
+  background: linear-gradient(180deg, var(--pink) 0%, var(--hot-pink) 100%);
+  transform: scale(1.1);
+  text-shadow: 0 0 10px white;
+}
+
+/* Loading state */
+.loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--cyan);
+  font-size: 1.2rem;
+}
+
+/* Footer */
+footer {
+  margin-top: 30px;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #000033 0%, #330066 100%);
+  border: 3px ridge var(--purple);
+  border-radius: 10px;
+}
+
+.guestbook-link a {
+  color: var(--cyan);
+  text-decoration: underline;
+}
+
+.guestbook-link a:hover {
+  color: var(--pink);
+}
+
+.footer-graphics {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: var(--pink);
+}
+
+/* Blink effect - very Y2K! */
+.blink {
+  animation: blink-animation 1s steps(2, start) infinite;
+}
+
+@keyframes blink-animation {
+  to { visibility: hidden; }
+}
+
+.best-viewed {
+  font-size: 0.8rem;
+  color: #9999cc;
+  margin: 10px 0;
+}
+
+.under-construction {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: var(--yellow);
+}
+
+/* Sparkle cursor effect container */
+#sparkle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  animation: sparkle-fade 1s ease-out forwards;
+  font-size: 20px;
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .rainbow-text {
+    font-size: 1.8rem;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Hidden items for filtering */
+.wishlist-item.hidden {
+  display: none;
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Example Item - Cool Gadget",
+    "description": "This is a really awesome thing I've been wanting forever!!!",
+    "price": "$49.99",
+    "link": "https://example.com/product",
+    "image": "https://via.placeholder.com/200x200/ff69b4/ffffff?text=Item+1",
+    "priority": "high"
+  },
+  {
+    "id": 2,
+    "name": "Another Cool Thing",
+    "description": "Would love to have this! Any color works :)",
+    "price": "$25.00",
+    "link": "https://example.com/product2",
+    "image": "https://via.placeholder.com/200x200/00ffff/000000?text=Item+2",
+    "priority": "medium"
+  },
+  {
+    "id": 3,
+    "name": "Fun Accessory",
+    "description": "Saw this and thought it was neat!",
+    "price": "$15.00",
+    "link": "https://example.com/product3",
+    "image": "https://via.placeholder.com/200x200/ffff00/000000?text=Item+3",
+    "priority": "low"
+  }
+]
