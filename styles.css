@@ -5,14 +5,13 @@
 
 /* CSS Variables for easy customization */
 :root {
-  --flame-orange: #ff6600;
-  --flame-red: #ff3300;
-  --cyber-blue: #00ccff;
-  --electric-blue: #0099ff;
-  --neon-green: #39ff14;
+  --pink: #ff69b4;
+  --hot-pink: #ff1493;
+  --cyan: #00ffff;
+  --purple: #9932cc;
+  --yellow: #ffff00;
   --lime: #00ff00;
-  --silver: #c0c0c0;
-  --dark-blue: #000066;
+  --blue: #0066ff;
 }
 
 /* Tiled background - classic Y2K */
@@ -20,20 +19,20 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
-  background-color: #000011;
+  background-color: #000033;
   background-image:
-    radial-gradient(circle at 20% 80%, rgba(0, 153, 255, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 102, 0, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(255, 105, 180, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 10px,
-      rgba(0, 102, 204, 0.1) 10px,
-      rgba(0, 102, 204, 0.1) 20px
+      rgba(153, 50, 204, 0.1) 10px,
+      rgba(153, 50, 204, 0.1) 20px
     );
   min-height: 100vh;
   color: #ffffff;
-  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🔥</text></svg>'), auto;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">✨</text></svg>'), auto;
 }
 
 .page-wrapper {
@@ -46,17 +45,17 @@ body {
 header {
   text-align: center;
   padding: 20px;
-  background: linear-gradient(180deg, #001133 0%, #000011 100%);
-  border: 3px ridge var(--cyber-blue);
+  background: linear-gradient(180deg, #330066 0%, #000033 100%);
+  border: 3px ridge var(--cyan);
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow:
-    0 0 10px var(--flame-orange),
-    inset 0 0 30px rgba(0, 102, 204, 0.3);
+    0 0 10px var(--pink),
+    inset 0 0 30px rgba(153, 50, 204, 0.3);
 }
 
 .stars-decoration {
-  color: var(--flame-orange);
+  color: var(--yellow);
   font-size: 1.2rem;
   letter-spacing: 5px;
   animation: twinkle 1s ease-in-out infinite alternate;
@@ -90,10 +89,10 @@ header {
 
 /* Marquee banner */
 .marquee-banner {
-  background: linear-gradient(90deg, var(--flame-red), var(--flame-orange), var(--flame-red));
+  background: linear-gradient(90deg, var(--hot-pink), var(--purple), var(--hot-pink));
   padding: 8px;
   margin-top: 15px;
-  border: 2px inset var(--flame-orange);
+  border: 2px inset var(--pink);
   font-weight: bold;
   color: white;
   text-shadow: 1px 1px 2px black;
@@ -143,8 +142,8 @@ header {
 }
 
 .section-header h2 {
-  color: var(--cyber-blue);
-  text-shadow: 0 0 10px var(--cyber-blue), 2px 2px 0 var(--dark-blue);
+  color: var(--cyan);
+  text-shadow: 0 0 10px var(--cyan), 2px 2px 0 var(--purple);
   margin: 0;
 }
 
@@ -161,14 +160,14 @@ header {
 
 /* Individual item cards */
 .wishlist-item {
-  background: linear-gradient(135deg, #000a1a 0%, #001133 50%, #000a1a 100%);
-  border: 3px ridge var(--cyber-blue);
+  background: linear-gradient(135deg, #1a0033 0%, #330066 50%, #1a0033 100%);
+  border: 3px ridge var(--pink);
   border-radius: 15px;
   padding: 15px;
   text-align: center;
   box-shadow:
-    0 0 15px rgba(0, 153, 255, 0.5),
-    inset 0 0 20px rgba(0, 102, 204, 0.2);
+    0 0 15px rgba(255, 105, 180, 0.5),
+    inset 0 0 20px rgba(153, 50, 204, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
   overflow: hidden;
@@ -198,8 +197,8 @@ header {
 .wishlist-item:hover {
   transform: scale(1.03) rotate(1deg);
   box-shadow:
-    0 0 25px rgba(255, 102, 0, 0.8),
-    0 0 50px rgba(0, 153, 255, 0.3);
+    0 0 25px rgba(255, 105, 180, 0.8),
+    0 0 50px rgba(0, 255, 255, 0.3);
 }
 
 /* Priority badges */
@@ -222,12 +221,12 @@ header {
 }
 
 .priority-medium {
-  background: linear-gradient(90deg, var(--electric-blue), var(--cyber-blue));
+  background: linear-gradient(90deg, var(--hot-pink), var(--pink));
   color: white;
 }
 
 .priority-low {
-  background: linear-gradient(90deg, var(--neon-green), var(--lime));
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
   color: black;
 }
 
@@ -241,7 +240,7 @@ header {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border: 3px groove var(--cyber-blue);
+  border: 3px groove var(--cyan);
   border-radius: 10px;
   margin-bottom: 10px;
   background: #ffffff;
@@ -249,15 +248,15 @@ header {
 
 /* Item details */
 .item-name {
-  color: var(--flame-orange);
+  color: var(--yellow);
   font-size: 1.1rem;
   font-weight: bold;
   margin: 10px 0 5px;
-  text-shadow: 1px 1px 3px var(--dark-blue);
+  text-shadow: 1px 1px 3px var(--purple);
 }
 
 .item-description {
-  color: #aaccff;
+  color: #ffccff;
   font-size: 0.9rem;
   margin: 5px 0;
   font-style: italic;
@@ -275,17 +274,17 @@ header {
   display: inline-block;
   margin-top: 10px;
   padding: 8px 20px;
-  background: linear-gradient(180deg, var(--flame-orange) 0%, var(--flame-red) 100%);
+  background: linear-gradient(180deg, var(--hot-pink) 0%, #cc0066 100%);
   color: white;
   text-decoration: none;
-  border: 2px outset var(--flame-orange);
+  border: 2px outset var(--pink);
   border-radius: 20px;
   font-weight: bold;
   transition: all 0.2s;
 }
 
 .item-link:hover {
-  background: linear-gradient(180deg, #ff9933 0%, var(--flame-orange) 100%);
+  background: linear-gradient(180deg, var(--pink) 0%, var(--hot-pink) 100%);
   transform: scale(1.1);
   text-shadow: 0 0 10px white;
 }
@@ -295,7 +294,7 @@ header {
   grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
-  color: var(--cyber-blue);
+  color: var(--cyan);
   font-size: 1.2rem;
 }
 
@@ -304,24 +303,24 @@ footer {
   margin-top: 30px;
   padding: 20px;
   text-align: center;
-  background: linear-gradient(180deg, #000011 0%, #001133 100%);
-  border: 3px ridge var(--electric-blue);
+  background: linear-gradient(180deg, #000033 0%, #330066 100%);
+  border: 3px ridge var(--purple);
   border-radius: 10px;
 }
 
 .guestbook-link a {
-  color: var(--cyber-blue);
+  color: var(--cyan);
   text-decoration: underline;
 }
 
 .guestbook-link a:hover {
-  color: var(--flame-orange);
+  color: var(--pink);
 }
 
 .footer-graphics {
   font-size: 1.5rem;
   margin: 10px 0;
-  color: var(--flame-orange);
+  color: var(--pink);
 }
 
 /* Blink effect - very Y2K! */

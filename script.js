@@ -54,8 +54,8 @@ function renderWishlist(items) {
 function createItemCard(item) {
   const priorityLabels = {
     high: '🔥 Top Pick!',
-    medium: '💀 Want!',
-    low: '👾 Nice'
+    medium: '💖 Want!',
+    low: '✨ Nice'
   };
 
   return `
@@ -72,7 +72,7 @@ function createItemCard(item) {
       <h3 class="item-name">${item.name}</h3>
       <p class="item-description">${item.description}</p>
       <p class="item-price">${item.price}</p>
-      ${item.link ? `<a href="${item.link}" target="_blank" class="item-link">🔥 Get it here! 🔥</a>` : ''}
+      ${item.link ? `<a href="${item.link}" target="_blank" class="item-link">✨ Get it here! ✨</a>` : ''}
     </div>
   `;
 }
@@ -97,7 +97,7 @@ function filterItems(priority) {
 // Sparkle cursor trail effect - very Y2K!
 function initSparkleTrail() {
   const sparkleContainer = document.getElementById('sparkle-container');
-  const sparkles = ['🔥', '⚡', '💀', '👾', '☠️', '⭐'];
+  const sparkles = ['✨', '⭐', '💫', '🌟', '✧', '★'];
 
   let lastSparkleTime = 0;
   const sparkleDelay = 50; // ms between sparkles
