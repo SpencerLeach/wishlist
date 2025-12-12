@@ -29,6 +29,4 @@
 ---
 
 ## Already Added
-- Example Item - Cool Gadget ($49.99)
-- Another Cool Thing ($25.00)
-- Fun Accessory ($15.00)
+- ProsourceFit Multi-Grip Pull-Up Bar ($35) - Fitness
