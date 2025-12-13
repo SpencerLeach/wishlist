@@ -40,7 +40,7 @@ function initDesktopBlur() {
     const g = parseInt(hex.substr(2, 2), 16);
     const b = parseInt(hex.substr(4, 2), 16);
 
-    return `radial-gradient(ellipse 80px 80px at ${icon.x}px ${icon.y}px, rgba(${r}, ${g}, ${b}, 0.4) 0%, rgba(${r}, ${g}, ${b}, 0.2) 50%, transparent 70%)`;
+    return `radial-gradient(circle 60px at ${icon.x}px ${icon.y}px, rgba(${r}, ${g}, ${b}, 0.55) 0%, rgba(${r}, ${g}, ${b}, 0.35) 60%, transparent 85%)`;
   });
 
   overlay.style.background = gradients.join(', ');
