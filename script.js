@@ -272,10 +272,19 @@ function initWindowControls() {
   const xpContent = document.querySelector('.xp-content');
 
   let isMinimized = false;
+  let isMaximized = false;
 
-  // Minimize button - hides content
+  // Minimize button - hides content and cancels maximize
   if (minimizeBtn) {
     minimizeBtn.addEventListener('click', function() {
+      // If maximized, un-maximize first
+      if (isMaximized) {
+        isMaximized = false;
+        xpWindow.classList.remove('maximized');
+        maximizeBtn.textContent = '□';
+      }
+
+      // Toggle minimize
       isMinimized = !isMinimized;
 
       if (isMinimized) {
@@ -288,7 +297,7 @@ function initWindowControls() {
     });
   }
 
-  // Maximize button - toggles fullscreen
+  // Maximize button - toggles fullscreen and cancels minimize
   if (maximizeBtn) {
     maximizeBtn.addEventListener('click', function() {
       // If minimized, restore first
@@ -298,8 +307,11 @@ function initWindowControls() {
         minimizeBtn.textContent = '_';
       }
 
+      // Toggle maximize
+      isMaximized = !isMaximized;
       xpWindow.classList.toggle('maximized');
-      if (xpWindow.classList.contains('maximized')) {
+
+      if (isMaximized) {
         maximizeBtn.textContent = '❐';
       } else {
         maximizeBtn.textContent = '□';
