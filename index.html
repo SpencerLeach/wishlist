@@ -291,7 +291,7 @@
   <!-- Desktop -->
   <div class="desktop">
     <!-- Wishlist Folder -->
-    <a href="/wishlist/" class="desktop-icon" id="wishlist-icon">
+    <a href="/wishlist/" class="desktop-icon" id="wishlist-icon" data-color="#FFB300">
       <div class="icon-image">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <!-- Classic XP folder icon -->
@@ -303,7 +303,7 @@
     </a>
 
     <!-- Coming Soon placeholders -->
-    <div class="desktop-icon" style="opacity: 0.5; cursor: not-allowed;">
+    <div class="desktop-icon" data-color="#42A5F5" style="opacity: 0.5; cursor: not-allowed;">
       <div class="icon-image">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path fill="#90CAF9" d="M40 12H22l-4-4H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
@@ -313,7 +313,7 @@
       <div class="icon-label">Projects</div>
     </div>
 
-    <div class="desktop-icon" style="opacity: 0.5; cursor: not-allowed;">
+    <div class="desktop-icon" data-color="#66BB6A" style="opacity: 0.5; cursor: not-allowed;">
       <div class="icon-image">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path fill="#81C784" d="M40 12H22l-4-4H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
@@ -325,7 +325,7 @@
   </div>
 
   <!-- Phillip's House - Bottom Right -->
-  <a href="https://phillip-bishop.org" target="_blank" class="phillip-icon">
+  <a href="https://phillip-bishop.org" target="_blank" class="phillip-icon" data-color="#D4A090">
     <div class="phillip-headshot">
       <img src="/wishlist/phillip-headshot.png" alt="Phillip" style="width: 100%; height: 100%; object-fit: cover; border-radius: 3px;" onerror="this.style.display='none'; this.parentElement.innerHTML='👤';">
     </div>
@@ -370,6 +370,38 @@
       fetch('/wishlist/').then(r => r.text());
       fetch('/wishlist/wishlist-data.json').then(r => r.json());
     }, 1000);
+
+    // Capture icon positions and colors for subpage blur effect
+    function captureIconPositions() {
+      const icons = [];
+
+      // Get grid icons
+      document.querySelectorAll('.desktop-icon[data-color]').forEach(icon => {
+        const rect = icon.getBoundingClientRect();
+        icons.push({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          color: icon.dataset.color
+        });
+      });
+
+      // Get Phillip's icon (fixed position)
+      const phillip = document.querySelector('.phillip-icon[data-color]');
+      if (phillip) {
+        const rect = phillip.getBoundingClientRect();
+        icons.push({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          color: phillip.dataset.color
+        });
+      }
+
+      localStorage.setItem('desktopIcons', JSON.stringify(icons));
+    }
+
+    // Capture on load and resize
+    captureIconPositions();
+    window.addEventListener('resize', captureIconPositions);
   </script>
 </body>
 </html>

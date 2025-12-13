@@ -74,23 +74,15 @@ body::before {
   background-attachment: fixed;
 }
 
-/* Blurred desktop folder icons */
-body::after {
-  content: '';
+/* Blurred desktop folder icons - generated dynamically by script.js */
+#desktop-blur-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: -1;
-  /* Folder blobs positioned like desktop icons - horizontal row across top */
-  background:
-    /* Wishlist folder - yellow */
-    radial-gradient(ellipse 80px 60px at 70px 60px, rgba(255, 216, 53, 0.4) 0%, rgba(255, 179, 0, 0.3) 50%, transparent 70%),
-    /* Projects folder - blue */
-    radial-gradient(ellipse 80px 60px at 190px 60px, rgba(66, 165, 245, 0.4) 0%, rgba(25, 118, 210, 0.3) 50%, transparent 70%),
-    /* About folder - green */
-    radial-gradient(ellipse 80px 60px at 310px 60px, rgba(102, 187, 106, 0.4) 0%, rgba(56, 142, 60, 0.3) 50%, transparent 70%);
+  pointer-events: none;
   filter: blur(20px);
   -webkit-filter: blur(20px);
 }

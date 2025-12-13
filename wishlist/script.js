@@ -17,7 +17,35 @@ document.addEventListener('DOMContentLoaded', function() {
   initTaskbarClock();
   initMenuSounds();
   startThrobber();
+  initDesktopBlur();
 });
+
+// Generate blurred desktop icon overlay from localStorage
+function initDesktopBlur() {
+  const iconsData = localStorage.getItem('desktopIcons');
+  if (!iconsData) return;
+
+  const icons = JSON.parse(iconsData);
+  if (!icons.length) return;
+
+  // Create overlay element
+  const overlay = document.createElement('div');
+  overlay.id = 'desktop-blur-overlay';
+
+  // Generate radial gradients for each icon
+  const gradients = icons.map(icon => {
+    // Convert hex to rgba with low opacity
+    const hex = icon.color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+
+    return `radial-gradient(ellipse 80px 80px at ${icon.x}px ${icon.y}px, rgba(${r}, ${g}, ${b}, 0.4) 0%, rgba(${r}, ${g}, ${b}, 0.2) 50%, transparent 70%)`;
+  });
+
+  overlay.style.background = gradients.join(', ');
+  document.body.insertBefore(overlay, document.body.firstChild);
+}
 
 // ASCII Throbber Animation
 const throbberFrames = ['|', '/', '-', '\\'];
