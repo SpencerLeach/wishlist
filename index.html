@@ -4,82 +4,113 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Wish List</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Sparkle cursor trail effect -->
-  <div id="sparkle-container"></div>
-
-  <div class="page-wrapper">
-    <!-- Header with classic Y2K vibes -->
-    <header>
-      <div class="stars-decoration">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
-      <h1 class="rainbow-text">~*~ My Wish List ~*~</h1>
-      <div class="stars-decoration">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
-      <marquee behavior="scroll" direction="left" class="marquee-banner">
-        ♥ Welcome to my wishlist page! ♥ Thanks for stopping by! ♥ Pick something nice for me! ♥ You're visitor #<span id="visitor-count">1337</span>! ♥
-      </marquee>
-    </header>
-
-    <!-- Interests section -->
-    <div class="interests-box">
-      <p>💡 <strong>Not sure what to get?</strong> I'm currently into <span class="interest">tech & gadgets</span>, <span class="interest">getting fit</span>, <span class="interest">mastering chess</span>, and I'll be <span class="interest">moving into my own place</span> soon!</p>
+  <div class="xp-window">
+    <!-- Title bar with window controls -->
+    <div class="xp-titlebar">
+      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><rect fill='%234C4CFF' width='16' height='16'/></svg>" class="xp-icon" alt="icon">
+      <span class="xp-title">My Wish List</span>
+      <div class="xp-buttons">
+        <button class="xp-btn xp-minimize" aria-label="Minimize">_</button>
+        <button class="xp-btn xp-maximize" aria-label="Maximize">□</button>
+        <button class="xp-btn xp-close" aria-label="Close">×</button>
+      </div>
     </div>
 
-    <!-- Navigation buttons -->
-    <nav class="nav-buttons">
-      <button class="y2k-button" onclick="filterItems('all')">★ All Items ★</button>
-      <button class="y2k-button" onclick="filterItems('high')">🔥 Top Picks 🔥</button>
-      <button class="y2k-button" onclick="filterItems('medium')">💖 Would Love 💖</button>
-      <button class="y2k-button" onclick="filterItems('low')">✨ Nice 2 Have ✨</button>
-    </nav>
+    <!-- Menu bar (cosmetic) -->
+    <div class="xp-menubar">
+      <span class="xp-menu-item">File</span>
+      <span class="xp-menu-item">Edit</span>
+      <span class="xp-menu-item">View</span>
+      <span class="xp-menu-item">Favorites</span>
+      <span class="xp-menu-item">Help</span>
+    </div>
 
     <!-- Main content area -->
-    <main>
-      <div class="section-header">
-        <span class="new-badge">✨ NEW ✨</span>
-        <h2>~ What I Want ~</h2>
-        <span class="new-badge">✨ NEW ✨</span>
+    <div class="xp-content">
+      <!-- Header -->
+      <header>
+        <div class="ascii-border-top">╔═══════════════════════════════════════════╗</div>
+        <h1>My Wish List</h1>
+        <div class="ascii-border-bottom">╚═══════════════════════════════════════════╝</div>
+        <marquee behavior="scroll" direction="left" class="marquee-banner">
+          ♥ Welcome to my wishlist page! ♥ Thanks for stopping by! ♥ Pick something nice for me! ♥ You're visitor #<span id="visitor-count">1337</span>! ♥
+        </marquee>
+      </header>
+
+      <!-- Interests section -->
+      <div class="interests-box">
+        <div class="box-title">┌─ About My Interests ─┐</div>
+        <p><strong>* Not sure what to get?</strong> I'm currently into <span class="interest">tech &amp; gadgets</span>, <span class="interest">getting fit</span>, <span class="interest">mastering chess</span>, and I'll be <span class="interest">moving into my own place</span> soon!</p>
+        <div class="box-bottom">└───────────────────────┘</div>
       </div>
 
-      <div id="wishlist-container" class="wishlist-grid">
-        <!-- Items loaded via JavaScript -->
-        <div class="loading">
-          <p>~*~ Loading my wishlist ~*~</p>
-          <p>⏳ Please wait... ⏳</p>
+      <!-- Navigation buttons -->
+      <nav class="nav-buttons">
+        <button class="xp-button" onclick="filterItems('all')">[ All Items ]</button>
+        <button class="xp-button" onclick="filterItems('high')">>>> Top Picks &lt;&lt;&lt;</button>
+        <button class="xp-button" onclick="filterItems('medium')">&lt;3 Would Love &lt;3</button>
+        <button class="xp-button" onclick="filterItems('low')">* Nice to Have *</button>
+      </nav>
+
+      <!-- Main content area -->
+      <main>
+        <div class="section-header">
+          <h2>══════ What I Want ══════</h2>
         </div>
-      </div>
-    </main>
 
-    <!-- Guestbook Canvas -->
-    <section class="guestbook-section">
-      <h2>📝 Guestbook Wall 📝</h2>
-      <p class="canvas-instructions">Click anywhere and start typing! Backspace to delete.</p>
-      <div id="guestbook-canvas" class="guestbook-canvas" tabindex="0">
-        <!-- Canvas content loaded via JS -->
-      </div>
-    </section>
+        <div id="wishlist-container" class="wishlist-grid">
+          <!-- Items loaded via JavaScript -->
+          <div class="loading">
+            <p>Loading wishlist <span id="loading-throbber">|</span></p>
+            <p>Please wait...</p>
+          </div>
+        </div>
+      </main>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-graphics">
-        <span class="blink">♥</span> Made with love <span class="blink">♥</span>
+      <!-- Guestbook Canvas -->
+      <section class="guestbook-section">
+        <h2>┌──────── Guestbook Wall ────────┐</h2>
+        <p class="canvas-instructions">Click anywhere and start typing! Backspace to delete.</p>
+        <div id="guestbook-canvas" class="guestbook-canvas" tabindex="0">
+          <!-- Canvas content loaded via JS -->
+        </div>
+        <div class="guestbook-footer">└─────────────────────────────────┘</div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <div class="footer-section">
+          <div class="separator">═══════════════════════════════════════════</div>
+        </div>
+        <div class="footer-links">
+          <p>♥ Made with love ♥</p>
+          <p>Donate to the <a href="https://www.chess.com/news/view/naroditsky-memorial-chess-fund-announced" target="_blank">Naroditsky Memorial Fund</a></p>
+          <p>Check out my friend <a href="https://phillip-bishop.org" target="_blank">Phillip Bishop</a>!</p>
+        </div>
+        <div class="footer-info">
+          <p>Best viewed in Internet Explorer 6.0 - Screen resolution: 800x600</p>
+          <p>&copy; 2003-2024 - Last updated: <span id="last-updated"></span></p>
+          <p>*** Site always under construction ***</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Status bar -->
+    <div class="xp-statusbar">
+      <div class="status-section">
+        <span class="status-item">Visitor #<span id="visitor-count-status">1337</span></span>
       </div>
-      <div class="donate-link">
-        <p>Donate to the <a href="https://www.chess.com/news/view/naroditsky-memorial-chess-fund-announced" target="_blank">Naroditsky Memorial Fund</a></p>
+      <div class="status-section">
+        <span class="status-item">Items: <span id="item-count">0</span></span>
       </div>
-      <div class="friend-link">
-        <p>Check out my friend <a href="https://phillip-bishop.org" target="_blank">Phillip Bishop</a>!</p>
+      <div class="status-section status-ready">
+        <span>Ready</span>
       </div>
-      <div class="best-viewed">
-        <p>Best viewed in Internet Explorer 6.0</p>
-        <p>© 2024 - Last updated: <span id="last-updated"></span></p>
-      </div>
-      <div class="under-construction">
-        <p>🚧 Always under construction 🚧</p>
-      </div>
-    </footer>
+    </div>
   </div>
 
   <script src="script.js"></script>

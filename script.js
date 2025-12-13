@@ -1,17 +1,40 @@
-// ~*~ Y2K Wishlist JavaScript ~*~
-// Best viewed in Netscape Navigator 4.0!
+// Windows XP Wishlist JavaScript
+// Best viewed in Internet Explorer 6.0!
 
 // Store wishlist items globally
 let wishlistItems = [];
+let throbberInterval = null;
 
 // Load wishlist data when page loads
 document.addEventListener('DOMContentLoaded', function() {
   loadWishlist();
   loadGuestbook();
-  initSparkleTrail();
   setLastUpdated();
   randomizeVisitorCount();
+  initWindowControls();
+  startThrobber();
 });
+
+// ASCII Throbber Animation
+const throbberFrames = ['|', '/', '-', '\\'];
+let throbberIndex = 0;
+
+function startThrobber() {
+  const throbberEl = document.getElementById('loading-throbber');
+  if (throbberEl) {
+    throbberInterval = setInterval(() => {
+      throbberEl.textContent = throbberFrames[throbberIndex];
+      throbberIndex = (throbberIndex + 1) % throbberFrames.length;
+    }, 150);
+  }
+}
+
+function stopThrobber() {
+  if (throbberInterval) {
+    clearInterval(throbberInterval);
+    throbberInterval = null;
+  }
+}
 
 // Load wishlist from JSON file
 async function loadWishlist() {
@@ -22,13 +45,16 @@ async function loadWishlist() {
     if (!response.ok) throw new Error('Failed to load');
 
     wishlistItems = await response.json();
+    stopThrobber();
     renderWishlist(wishlistItems);
+    updateItemCount();
   } catch (error) {
     console.error('Error loading wishlist:', error);
+    stopThrobber();
     container.innerHTML = `
       <div class="loading">
-        <p>~*~ Oops! Could not load wishlist ~*~</p>
-        <p style="font-size: 0.8rem;">Make sure wishlist-data.json is in the same folder!</p>
+        <p>*** Oops! Could not load wishlist ***</p>
+        <p style="font-size: 10px;">Make sure wishlist-data.json is in the same folder!</p>
       </div>
     `;
   }
@@ -41,7 +67,7 @@ function renderWishlist(items) {
   if (items.length === 0) {
     container.innerHTML = `
       <div class="loading">
-        <p>~*~ No items yet! ~*~</p>
+        <p>*** No items yet! ***</p>
         <p>Add some wishes to wishlist-data.json</p>
       </div>
     `;
@@ -54,26 +80,26 @@ function renderWishlist(items) {
 // Create HTML for a single item card
 function createItemCard(item) {
   const priorityLabels = {
-    high: '🔥 Top Pick!',
-    medium: '💖 Want!',
-    low: '✨ Nice'
+    high: '>>> TOP PICK <<<',
+    medium: '<3 WANT! <3',
+    low: '* Nice *'
   };
 
   return `
     <div class="wishlist-item" data-priority="${item.priority}">
       <span class="priority-badge priority-${item.priority}">
-        ${priorityLabels[item.priority] || '✨'}
+        ${priorityLabels[item.priority] || '* Nice *'}
       </span>
       <img
         src="${item.image}"
         alt="${item.name}"
         class="item-image"
-        onerror="this.src='https://via.placeholder.com/150x150/ff69b4/ffffff?text=No+Image'"
+        onerror="this.src='https://via.placeholder.com/150x150/ECE9D8/000000?text=No+Image'"
       >
       <h3 class="item-name">${item.name}</h3>
       <p class="item-description">${item.description}</p>
       <p class="item-price">${item.price}</p>
-      ${item.link ? `<a href="${item.link}" target="_blank" class="item-link">✨ Get it here! ✨</a>` : ''}
+      ${item.link ? `<a href="${item.link}" target="_blank" class="item-link">[ Get it here ]</a>` : ''}
     </div>
   `;
 }
@@ -89,43 +115,14 @@ function filterItems(priority) {
       item.classList.add('hidden');
     }
   });
-
-  // Add a fun sound effect (visual feedback instead)
-  const buttons = document.querySelectorAll('.y2k-button');
-  buttons.forEach(btn => btn.style.transform = 'scale(1)');
 }
 
-// Sparkle cursor trail effect - very Y2K!
-function initSparkleTrail() {
-  const sparkleContainer = document.getElementById('sparkle-container');
-  const sparkles = ['✨', '⭐', '💫', '🌟', '✧', '★'];
-
-  let lastSparkleTime = 0;
-  const sparkleDelay = 50; // ms between sparkles
-
-  document.addEventListener('mousemove', function(e) {
-    const now = Date.now();
-    if (now - lastSparkleTime < sparkleDelay) return;
-    lastSparkleTime = now;
-
-    const sparkle = document.createElement('div');
-    sparkle.className = 'sparkle';
-    sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
-    sparkle.style.left = (e.clientX - 10) + 'px';
-    sparkle.style.top = (e.clientY - 10) + 'px';
-    sparkle.style.color = getRandomColor();
-
-    sparkleContainer.appendChild(sparkle);
-
-    // Remove sparkle after animation
-    setTimeout(() => sparkle.remove(), 1000);
-  });
-}
-
-// Get random Y2K color
-function getRandomColor() {
-  const colors = ['#ff69b4', '#00ffff', '#ffff00', '#ff1493', '#00ff00', '#9932cc'];
-  return colors[Math.floor(Math.random() * colors.length)];
+// Update item count in status bar
+function updateItemCount() {
+  const countEl = document.getElementById('item-count');
+  if (countEl) {
+    countEl.textContent = wishlistItems.length;
+  }
 }
 
 // Set the last updated date
@@ -141,18 +138,108 @@ function setLastUpdated() {
   }
 }
 
-// Randomize visitor count for authentic Y2K feel
+// Randomize visitor count for authentic feel
 function randomizeVisitorCount() {
+  const baseCount = 1337;
+  const randomAdd = Math.floor(Math.random() * 500);
+  const visitorCount = baseCount + randomAdd;
+
+  // Update both visitor count locations
   const countEl = document.getElementById('visitor-count');
+  const countStatusEl = document.getElementById('visitor-count-status');
+
   if (countEl) {
-    // Generate a "realistic" looking visitor count
-    const baseCount = 1337;
-    const randomAdd = Math.floor(Math.random() * 500);
-    countEl.textContent = baseCount + randomAdd;
+    countEl.textContent = visitorCount;
+  }
+  if (countStatusEl) {
+    countStatusEl.textContent = visitorCount;
   }
 }
 
-// Easter egg: Konami code!
+// Initialize XP Window Controls
+function initWindowControls() {
+  const minimizeBtn = document.querySelector('.xp-minimize');
+  const maximizeBtn = document.querySelector('.xp-maximize');
+  const closeBtn = document.querySelector('.xp-close');
+  const xpWindow = document.querySelector('.xp-window');
+  const xpContent = document.querySelector('.xp-content');
+
+  // Minimize button - hides content
+  if (minimizeBtn) {
+    minimizeBtn.addEventListener('click', function() {
+      if (xpContent.style.display === 'none') {
+        xpContent.style.display = 'block';
+        minimizeBtn.textContent = '_';
+      } else {
+        xpContent.style.display = 'none';
+        minimizeBtn.textContent = '□';
+      }
+    });
+  }
+
+  // Maximize button - toggles fullscreen
+  if (maximizeBtn) {
+    maximizeBtn.addEventListener('click', function() {
+      xpWindow.classList.toggle('maximized');
+      if (xpWindow.classList.contains('maximized')) {
+        maximizeBtn.textContent = '❐';
+      } else {
+        maximizeBtn.textContent = '□';
+      }
+    });
+  }
+
+  // Close button - Easter egg
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      if (confirm('Are you sure you want to close this window?')) {
+        document.body.innerHTML = `
+          <div style="
+            background: #5A7EBF;
+            color: white;
+            padding: 40px;
+            font-family: Tahoma, Verdana, sans-serif;
+            text-align: center;
+            font-size: 14px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+          ">
+            <div style="
+              background: white;
+              color: black;
+              padding: 20px 30px;
+              border: 3px solid;
+              border-color: #FFFFFF #716F64 #716F64 #FFFFFF;
+              box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+              max-width: 400px;
+            ">
+              <h1 style="margin: 0 0 15px 0; font-size: 16px;">Window Closed</h1>
+              <p style="margin: 10px 0; font-size: 11px;">Thank you for visiting my wishlist!</p>
+              <p style="margin: 10px 0; font-size: 11px;">Press F5 or click Refresh to return.</p>
+              <div style="text-align: center; margin-top: 20px;">
+                <button onclick="location.reload()" style="
+                  font-family: Tahoma, Verdana, sans-serif;
+                  font-size: 11px;
+                  padding: 4px 12px;
+                  background: #ECE9D8;
+                  border: 2px solid;
+                  border-color: #FFFFFF #716F64 #716F64 #FFFFFF;
+                  cursor: pointer;
+                  min-width: 80px;
+                ">[ OK ]</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  }
+}
+
+// Easter egg: Konami code activates Windows XP startup sound alert
 let konamiCode = [];
 const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
@@ -161,28 +248,33 @@ document.addEventListener('keydown', function(e) {
   konamiCode = konamiCode.slice(-10);
 
   if (konamiCode.join(',') === konamiSequence.join(',')) {
-    activatePartyMode();
+    activateXPMode();
   }
 });
 
-// Party mode easter egg!
-function activatePartyMode() {
-  document.body.style.animation = 'rainbow-bg 0.5s linear infinite';
+// XP Mode easter egg
+function activateXPMode() {
+  alert('*** WINDOWS XP ACTIVATED ***\n\nWelcome to Windows XP!\n\nSystem Information:\nOS: Windows XP Professional\nBuild: 2600.xpsp_sp3_gdr.130821-1623\nProcessor: Intel Pentium 4\nMemory: 512 MB RAM');
 
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes rainbow-bg {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
-    }
+  // Add XP logo watermark temporarily
+  const watermark = document.createElement('div');
+  watermark.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 11px;
+    border: 2px solid #888;
+    z-index: 10000;
   `;
-  document.head.appendChild(style);
+  watermark.textContent = 'Windows XP Professional - Build 2600';
+  document.body.appendChild(watermark);
 
-  alert('🎉 PARTY MODE ACTIVATED! 🎉');
-
-  // Stop after 10 seconds
   setTimeout(() => {
-    document.body.style.animation = '';
+    watermark.remove();
   }, 10000);
 }
 
