@@ -72,8 +72,29 @@ body::before {
       #2D5016 100%
     );
   background-attachment: fixed;
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+}
+
+/* Blurred desktop folder icons */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  /* Folder blobs positioned like desktop icons */
+  background:
+    /* Wishlist folder - yellow */
+    radial-gradient(ellipse 60px 80px at 40px 60px, #FFD835 0%, #FFB300 50%, transparent 70%),
+    /* Projects folder - blue */
+    radial-gradient(ellipse 60px 80px at 40px 180px, #42A5F5 0%, #1976D2 50%, transparent 70%),
+    /* About folder - green */
+    radial-gradient(ellipse 60px 80px at 40px 300px, #66BB6A 0%, #388E3C 50%, transparent 70%),
+    /* Phillip's house - skin tone blob */
+    radial-gradient(ellipse 60px 80px at calc(100vw - 60px) calc(100vh - 140px), #E8B4A0 0%, #D4A090 50%, transparent 70%);
+  filter: blur(20px);
+  -webkit-filter: blur(20px);
 }
 
 /* ==== XP Window ==== */

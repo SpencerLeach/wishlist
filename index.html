@@ -107,6 +107,47 @@
       word-wrap: break-word;
     }
 
+    /* Phillip's House - Bottom right corner */
+    .phillip-icon {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      width: 100px;
+      height: fit-content;
+      text-align: center;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 3px;
+      transition: background 0.1s;
+      text-decoration: none;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      z-index: 100;
+    }
+
+    .phillip-icon:hover {
+      background: rgba(60, 142, 243, 0.3);
+      border: 1px dotted rgba(255, 255, 255, 0.5);
+      padding: 7px;
+    }
+
+    .phillip-icon:active {
+      background: rgba(60, 142, 243, 0.5);
+    }
+
+    .phillip-headshot {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 5px;
+      border-radius: 3px;
+      filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+      background: #E8B4A0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
     /* XP Taskbar */
     .xp-taskbar {
       position: fixed;
@@ -217,6 +258,19 @@
         font-size: 13px;
       }
 
+      .phillip-icon {
+        bottom: 80px;
+        right: 15px;
+        width: 90px;
+        padding: 10px;
+      }
+
+      .phillip-headshot {
+        width: 56px;
+        height: 56px;
+        font-size: 42px;
+      }
+
       .xp-taskbar {
         height: 56px;
       }
@@ -269,6 +323,14 @@
       <div class="icon-label">About Me</div>
     </div>
   </div>
+
+  <!-- Phillip's House - Bottom Right -->
+  <a href="https://phillip-bishop.org" target="_blank" class="phillip-icon">
+    <div class="phillip-headshot">
+      <img src="/phillip-headshot.png" alt="Phillip" style="width: 100%; height: 100%; object-fit: cover; border-radius: 3px;" onerror="this.style.display='none'; this.parentElement.innerHTML='👤';">
+    </div>
+    <div class="icon-label">PHILLIP'S HOUSE</div>
+  </a>
 
   <!-- XP Taskbar -->
   <div class="xp-taskbar">
