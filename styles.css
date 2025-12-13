@@ -27,18 +27,32 @@
 body {
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 11px;
-  /* Bliss wallpaper - bright blue sky with rolling green hill */
-  background: linear-gradient(to bottom,
-    #3A96DD 0%,
-    #4DA4E3 30%,
-    #5DB0E8 60%,
-    #6BB8ED 65%,
-    #7EC856 68%,
-    #8DD15F 75%,
-    #82C74C 85%,
-    #5A9A3C 95%,
-    #2D5016 100%
-  );
+  /* Bliss wallpaper - bright blue sky with rolling green hill and clouds */
+  background:
+    /* Soft fluffy clouds */
+    radial-gradient(ellipse 400px 80px at 20% 15%, rgba(255, 255, 255, 0.7) 0%, transparent 70%),
+    radial-gradient(ellipse 350px 90px at 75% 25%, rgba(255, 255, 255, 0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 70px at 50% 10%, rgba(255, 255, 255, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 450px 100px at 85% 40%, rgba(255, 255, 255, 0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 280px 60px at 10% 35%, rgba(255, 255, 255, 0.45) 0%, transparent 70%),
+    /* Hill bulge in center-left */
+    radial-gradient(ellipse 800px 300px at 40% 75%,
+      #95D968 0%,
+      #8DD15F 30%,
+      transparent 70%
+    ),
+    /* Base sky-to-hill gradient */
+    linear-gradient(to bottom,
+      #3A96DD 0%,
+      #4DA4E3 30%,
+      #5DB0E8 60%,
+      #6BB8ED 65%,
+      #7EC856 68%,
+      #8DD15F 75%,
+      #82C74C 85%,
+      #5A9A3C 95%,
+      #2D5016 100%
+    );
   background-attachment: fixed;
   color: var(--xp-text);
   padding: 20px 20px 60px 20px; /* Extra bottom padding for taskbar */
