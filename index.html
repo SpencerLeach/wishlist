@@ -3,134 +3,308 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Wish List</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
-  <link rel="stylesheet" href="styles.css">
+  <title>sleach.me - Desktop</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+
+  <!-- Aggressive preloading for instant navigation -->
+  <link rel="prefetch" href="/wishlist/" as="document">
+  <link rel="prefetch" href="/wishlist/styles.css" as="style">
+  <link rel="prefetch" href="/wishlist/script.js" as="script">
+  <link rel="prefetch" href="/wishlist/wishlist-data.json" as="fetch">
+
+  <style>
+    /* Windows XP Desktop */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(60, 142, 243, 0.3);
+    }
+
+    body {
+      font-family: Tahoma, Verdana, sans-serif;
+      font-size: 11px;
+      /* Bliss wallpaper - bright blue sky with rolling green hill and clouds */
+      background:
+        /* Soft fluffy clouds */
+        radial-gradient(ellipse 400px 80px at 20% 15%, rgba(255, 255, 255, 0.7) 0%, transparent 70%),
+        radial-gradient(ellipse 350px 90px at 75% 25%, rgba(255, 255, 255, 0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 300px 70px at 50% 10%, rgba(255, 255, 255, 0.5) 0%, transparent 70%),
+        radial-gradient(ellipse 450px 100px at 85% 40%, rgba(255, 255, 255, 0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 280px 60px at 10% 35%, rgba(255, 255, 255, 0.45) 0%, transparent 70%),
+        /* Hill bulge in center-left */
+        radial-gradient(ellipse 800px 300px at 40% 75%,
+          #95D968 0%,
+          #8DD15F 30%,
+          transparent 70%
+        ),
+        /* Base sky-to-hill gradient */
+        linear-gradient(to bottom,
+          #3A96DD 0%,
+          #4DA4E3 30%,
+          #5DB0E8 60%,
+          #6BB8ED 65%,
+          #7EC856 68%,
+          #8DD15F 75%,
+          #82C74C 85%,
+          #5A9A3C 95%,
+          #2D5016 100%
+        );
+      background-attachment: fixed;
+      color: #000;
+      min-height: 100vh;
+      overflow: hidden;
+      cursor: default;
+      user-select: none;
+    }
+
+    /* Desktop icons container */
+    .desktop {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 100px);
+      gap: 20px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    /* Desktop icon/folder */
+    .desktop-icon {
+      width: 100px;
+      text-align: center;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 3px;
+      transition: background 0.1s;
+      text-decoration: none;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    .desktop-icon:hover {
+      background: rgba(60, 142, 243, 0.3);
+      border: 1px dotted rgba(255, 255, 255, 0.5);
+      padding: 7px;
+    }
+
+    .desktop-icon:active {
+      background: rgba(60, 142, 243, 0.5);
+    }
+
+    .icon-image {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 5px;
+      filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+    }
+
+    .icon-label {
+      font-size: 11px;
+      font-weight: normal;
+      line-height: 1.2;
+      word-wrap: break-word;
+    }
+
+    /* XP Taskbar */
+    .xp-taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(180deg, #3168D5 0%, #2350C6 5%, #1F45B5 50%, #1840B0 100%);
+      border-top: 2px solid #1840B0;
+      display: flex;
+      align-items: center;
+      padding: 0 5px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+    }
+
+    .xp-start-button {
+      height: 32px;
+      padding: 0 12px 0 8px;
+      background: linear-gradient(180deg, #5EAB5D 0%, #3C8D3C 100%);
+      border: 1px solid;
+      border-color: #7FD67F #1E5B1E #1E5B1E #7FD67F;
+      border-radius: 0 6px 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-family: Tahoma, Verdana, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      user-select: none;
+    }
+
+    .xp-start-button:hover {
+      background: linear-gradient(180deg, #6FBC6E 0%, #4D9E4D 100%);
+    }
+
+    .xp-start-button:active {
+      border-style: inset;
+      border-color: #1E5B1E #7FD67F #7FD67F #1E5B1E;
+      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .start-logo {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #FF0000 0%, #FF6B00 25%, #FFD800 50%, #00A651 75%, #0057B8 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .xp-system-tray {
+      height: 32px;
+      margin-left: auto;
+      padding: 0 10px;
+      background: linear-gradient(180deg, rgba(23, 111, 230, 0.5) 0%, rgba(16, 64, 176, 0.5) 100%);
+      border: 1px solid;
+      border-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0.2);
+      border-left: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: white;
+    }
+
+    .xp-clock {
+      font-family: Tahoma, Verdana, sans-serif;
+      font-size: 11px;
+      color: white;
+      padding: 0 5px;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 600px) {
+      body {
+        font-size: 14px;
+      }
+
+      .desktop {
+        grid-template-columns: repeat(auto-fill, 90px);
+        gap: 15px;
+        padding: 15px;
+        height: calc(100vh - 80px);
+      }
+
+      .desktop-icon {
+        width: 90px;
+        padding: 10px;
+      }
+
+      .icon-image {
+        width: 56px;
+        height: 56px;
+      }
+
+      .icon-label {
+        font-size: 13px;
+      }
+
+      .xp-taskbar {
+        height: 56px;
+      }
+
+      .xp-start-button {
+        height: 44px;
+        font-size: 14px;
+      }
+
+      .start-logo {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="xp-window">
-    <!-- Title bar with window controls -->
-    <div class="xp-titlebar">
-      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><rect fill='%234C4CFF' width='16' height='16'/></svg>" class="xp-icon" alt="icon">
-      <span class="xp-title">Spencer's Wish List</span>
-      <div class="xp-buttons">
-        <button class="xp-btn xp-minimize" aria-label="Minimize">_</button>
-        <button class="xp-btn xp-maximize" aria-label="Maximize">□</button>
-        <button class="xp-btn xp-close" aria-label="Close">×</button>
+  <!-- Desktop -->
+  <div class="desktop">
+    <!-- Wishlist Folder -->
+    <a href="/wishlist/" class="desktop-icon" id="wishlist-icon">
+      <div class="icon-image">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <!-- Classic XP folder icon -->
+          <path fill="#FDD835" d="M40 12H22l-4-4H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
+          <path fill="#FFB300" d="M40 12H8c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
+        </svg>
       </div>
+      <div class="icon-label">Wishlist</div>
+    </a>
+
+    <!-- Coming Soon placeholders -->
+    <div class="desktop-icon" style="opacity: 0.5; cursor: not-allowed;">
+      <div class="icon-image">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <path fill="#90CAF9" d="M40 12H22l-4-4H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
+          <path fill="#42A5F5" d="M40 12H8c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
+        </svg>
+      </div>
+      <div class="icon-label">Projects</div>
     </div>
 
-    <!-- Menu bar (cosmetic) -->
-    <div class="xp-menubar">
-      <span class="xp-menu-item">File</span>
-      <span class="xp-menu-item">Edit</span>
-      <span class="xp-menu-item">View</span>
-      <span class="xp-menu-item">Favorites</span>
-      <span class="xp-menu-item">Help</span>
-    </div>
-
-    <!-- Main content area -->
-    <div class="xp-content">
-      <!-- Header -->
-      <header>
-        <div class="ascii-border-top">╔═══════════════════════════════════════════╗</div>
-        <h1>Spencer's Wish List</h1>
-        <div class="ascii-border-bottom">╚═══════════════════════════════════════════╝</div>
-        <marquee behavior="scroll" direction="left" class="marquee-banner" id="scrolling-marquee">
-          ♥ Welcome to my wishlist page! ♥ Thanks for stopping by! ♥ Pick something nice for me! ♥ You're at site visit #<span id="visitor-count">1337</span>! ♥
-        </marquee>
-      </header>
-
-      <!-- Interests section -->
-      <div class="interests-box">
-        <div class="box-title">┌─ About My Interests ─┐</div>
-        <p><strong>* Not sure what to get?</strong> I'm currently into <span class="interest">tech &amp; gadgets</span>, <span class="interest">getting fit</span>, <span class="interest">mastering chess</span>, and I'll be <span class="interest">moving into my own place</span> soon!</p>
-        <div class="box-bottom">└───────────────────────┘</div>
+    <div class="desktop-icon" style="opacity: 0.5; cursor: not-allowed;">
+      <div class="icon-image">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <path fill="#81C784" d="M40 12H22l-4-4H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
+          <path fill="#66BB6A" d="M40 12H8c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"/>
+        </svg>
       </div>
-
-      <!-- Navigation buttons -->
-      <nav class="nav-buttons">
-        <button class="xp-button" onclick="filterItems('all')">[ All Items ]</button>
-        <button class="xp-button" onclick="filterItems('high')">>>> Top Picks &lt;&lt;&lt;</button>
-        <button class="xp-button" onclick="filterItems('medium')">&lt;3 Would Love &lt;3</button>
-        <button class="xp-button" onclick="filterItems('low')">* Nice to Have *</button>
-      </nav>
-
-      <!-- Main content area -->
-      <main>
-        <div class="section-header">
-          <h2>══════ What I Want ══════</h2>
-        </div>
-
-        <div id="wishlist-container" class="wishlist-grid">
-          <!-- Items loaded via JavaScript -->
-          <div class="loading">
-            <p>Loading wishlist <span id="loading-throbber">|</span></p>
-            <p>Please wait...</p>
-          </div>
-        </div>
-      </main>
-
-      <!-- Guestbook Canvas -->
-      <section class="guestbook-section">
-        <h2>┌──────── Guestbook Wall ────────┐</h2>
-        <p class="canvas-instructions">Click anywhere and start typing! Backspace to delete.</p>
-        <div id="guestbook-canvas" class="guestbook-canvas" tabindex="0">
-          <!-- Canvas content loaded via JS -->
-        </div>
-        <div class="guestbook-footer">└─────────────────────────────────┘</div>
-      </section>
-
-      <!-- Footer -->
-      <footer>
-        <div class="footer-section">
-          <div class="separator">═══════════════════════════════════════════</div>
-        </div>
-        <div class="footer-links">
-          <p>♥ Made with love ♥</p>
-          <p>Donate to the <a href="https://www.chess.com/news/view/naroditsky-memorial-chess-fund-announced" target="_blank">Naroditsky Memorial Fund</a></p>
-          <p>Check out my friend <a href="https://phillip-bishop.org" target="_blank">Phillip Bishop</a>!</p>
-        </div>
-        <div class="footer-info">
-          <p>Best viewed in Internet Explorer 6.0 - Screen resolution: 800x600</p>
-          <p>&copy; 2003-2025 - Last updated: <span id="last-updated"></span></p>
-          <p>*** Site always under construction ***</p>
-        </div>
-      </footer>
-    </div>
-
-    <!-- Status bar -->
-    <div class="xp-statusbar">
-      <div class="status-section">
-        <span class="status-item">Site visit #<span id="visitor-count-status">1337</span></span>
-      </div>
-      <div class="status-section">
-        <span class="status-item">Items: <span id="item-count">0</span></span>
-      </div>
-      <div class="status-section status-ready">
-        <span>Ready</span>
-      </div>
+      <div class="icon-label">About Me</div>
     </div>
   </div>
 
-  <!-- Windows XP Taskbar -->
+  <!-- XP Taskbar -->
   <div class="xp-taskbar">
     <button class="xp-start-button">
       <div class="start-logo">⊞</div>
       <span>start</span>
     </button>
-    <div class="xp-taskbar-items">
-      <div class="xp-taskbar-item active">
-        <span>📄</span>
-        <span>Spencer's Wish List</span>
-      </div>
-    </div>
     <div class="xp-system-tray">
       <span>🔊</span>
       <span class="xp-clock" id="xp-clock">12:00 PM</span>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById('xp-clock').textContent = `${hours}:${minutesStr} ${ampm}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Aggressive preloading: Load wishlist page on hover
+    document.getElementById('wishlist-icon').addEventListener('mouseenter', function() {
+      // Prefetch the page HTML
+      fetch('/wishlist/').then(r => r.text());
+    }, { once: true });
+
+    // Alternative: Preload everything after 1 second of page load
+    setTimeout(() => {
+      fetch('/wishlist/').then(r => r.text());
+      fetch('/wishlist/wishlist-data.json').then(r => r.json());
+    }, 1000);
+  </script>
 </body>
 </html>
