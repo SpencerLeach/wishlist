@@ -52,5 +52,14 @@
     "link": "https://shop-us.kurzgesagt.org/collections/deals/products/cosmic-quartet-poster-bundle?variant=41150343577648",
     "image": "https://shop-us.kurzgesagt.org/cdn/shop/files/01_LunarLonging4_Bundle_Front_grande.jpg?v=1750078274",
     "priority": "medium"
+  },
+  {
+    "id": 7,
+    "name": "Coach 3-in-1 Wallet (Natural Grain Leather)",
+    "description": "Classic natural grain leather with textured feel. 8 card slots, full-length bill compartments, removable ID insert.",
+    "price": "~$120-140",
+    "link": "https://www.coach.com/products/3-in-1-wallet/CY911-BLK.html",
+    "image": "https://via.placeholder.com/150x150/000000/ffffff?text=Coach+Wallet",
+    "priority": "medium"
   }
 ]
