@@ -27,10 +27,19 @@
 body {
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 11px;
-  background: #5A7EBF; /* XP desktop blue */
+  /* Bliss wallpaper inspired gradient - blue sky with green hill */
+  background: linear-gradient(to bottom,
+    #5A7EBF 0%,
+    #5A7EBF 60%,
+    #6BA854 60%,
+    #7BC24A 75%,
+    #6BA854 100%
+  );
+  background-attachment: fixed;
   color: var(--xp-text);
-  padding: 20px;
+  padding: 20px 20px 60px 20px; /* Extra bottom padding for taskbar */
   cursor: default;
+  min-height: 100vh;
 }
 
 /* ==== XP Window ==== */
@@ -167,11 +176,15 @@ body {
 
 /* ==== Typography ==== */
 h1 {
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
   margin: 10px 0;
   color: var(--xp-blue-dark);
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
 }
 
 h2 {
@@ -372,6 +385,10 @@ header {
   font-size: 10px;
 }
 
+.item-link:visited {
+  color: var(--xp-text);
+}
+
 .item-link:hover {
   background: #F0E9D8;
   color: var(--xp-text);
@@ -476,6 +493,123 @@ footer {
 /* ==== Hidden Items (for filtering) ==== */
 .wishlist-item.hidden {
   display: none;
+}
+
+/* ==== Windows XP Taskbar ==== */
+.xp-taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(180deg, #3168D5 0%, #2350C6 5%, #1F45B5 50%, #1840B0 100%);
+  border-top: 2px solid #1840B0;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+}
+
+.xp-start-button {
+  height: 32px;
+  padding: 0 12px 0 8px;
+  background: linear-gradient(180deg, #5EAB5D 0%, #3C8D3C 100%);
+  border: 1px solid;
+  border-color: #7FD67F #1E5B1E #1E5B1E #7FD67F;
+  border-radius: 0 6px 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+.xp-start-button:hover {
+  background: linear-gradient(180deg, #6FBC6E 0%, #4D9E4D 100%);
+}
+
+.xp-start-button:active {
+  border-style: inset;
+  border-color: #1E5B1E #7FD67F #7FD67F #1E5B1E;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.start-logo {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #FF0000 0%, #FF6B00 25%, #FFD800 50%, #00A651 75%, #0057B8 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.xp-taskbar-items {
+  flex-grow: 1;
+  height: 32px;
+  margin-left: 10px;
+  display: flex;
+  gap: 3px;
+}
+
+.xp-taskbar-item {
+  height: 100%;
+  padding: 0 10px;
+  background: linear-gradient(180deg, #2350C6 0%, #1840B0 100%);
+  border: 1px solid;
+  border-color: #4A7AE8 #0F2C7A #0F2C7A #4A7AE8;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  color: white;
+  max-width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.xp-taskbar-item.active {
+  background: linear-gradient(180deg, #1840B0 0%, #2350C6 100%);
+  border-color: #0F2C7A #4A7AE8 #4A7AE8 #0F2C7A;
+  border-style: inset;
+}
+
+.xp-taskbar-item:hover:not(.active) {
+  background: linear-gradient(180deg, #2A5ED7 0%, #1F4FC0 100%);
+}
+
+.xp-system-tray {
+  height: 32px;
+  margin-left: auto;
+  padding: 0 10px;
+  background: linear-gradient(180deg, rgba(23, 111, 230, 0.5) 0%, rgba(16, 64, 176, 0.5) 100%);
+  border: 1px solid;
+  border-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: white;
+}
+
+.xp-clock {
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 11px;
+  color: white;
+  padding: 0 5px;
 }
 
 /* ==== Responsive (maintain XP feel) ==== */

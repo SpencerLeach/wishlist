@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   trackSiteVisit();
   initWindowControls();
   initRandomMarquee();
+  initTaskbarClock();
   startThrobber();
 });
 
@@ -34,9 +35,9 @@ function startThrobber() {
 
 function stopThrobber() {
   if (throbberInterval) {
-    // Keep throbber visible for at least 800ms so it's actually visible
+    // Keep throbber visible for at least 1500ms so it's actually visible
     const elapsed = Date.now() - throbberStartTime;
-    const minDisplayTime = 800;
+    const minDisplayTime = 1500;
     const delay = Math.max(0, minDisplayTime - elapsed);
 
     setTimeout(() => {
@@ -476,6 +477,32 @@ async function saveCanvas() {
   }
 }
 
+// ==================== TASKBAR CLOCK ====================
+
+function initTaskbarClock() {
+  updateTaskbarClock();
+  setInterval(updateTaskbarClock, 1000); // Update every second
+}
+
+function updateTaskbarClock() {
+  const clockEl = document.getElementById('xp-clock');
+  if (!clockEl) return;
+
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = now.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  // Convert to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12; // 0 should be 12
+
+  // Format with leading zeros
+  const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+
+  clockEl.textContent = `${hours}:${minutesStr} ${ampm}`;
+}
+
 // ==================== RANDOM MARQUEE MESSAGES ====================
 
 const marqueeMessages = [
@@ -501,41 +528,48 @@ const marqueeMessages = [
   '~~ Wave ~~ ~~ Wave ~~ Ocean sounds... Relaxing... ~~ Wave ~~'
 ];
 
-let hasScrolledOnce = false;
+let marqueeChangeScheduled = false;
 
 function initRandomMarquee() {
   const marquee = document.getElementById('scrolling-marquee');
   if (!marquee) return;
 
-  // Listen for when marquee finishes one loop
-  marquee.addEventListener('finish', changeMarqueeText);
-
-  // Marquee doesn't have a native 'finish' event, so we'll use a timer
-  // Calculate approximate scroll time and set interval
-  const marqueeWidth = marquee.offsetWidth;
-  const contentWidth = marquee.scrollWidth;
-  const scrollSpeed = 6; // Default marquee speed in pixels per iteration
-  const scrollTime = ((marqueeWidth + contentWidth) / scrollSpeed) * 16; // ~16ms per frame
+  // Use MutationObserver to detect when marquee has scrolled
+  // We'll check the scroll position periodically
+  let lastScrollLeft = marquee.scrollLeft;
 
   setInterval(() => {
-    if (hasScrolledOnce) {
-      changeMarqueeText();
-    } else {
-      hasScrolledOnce = true;
+    // When marquee resets to beginning, its scrollLeft becomes 0 or near 0
+    // This happens after text scrolls completely off screen to the left
+    const currentScrollLeft = marquee.scrollLeft;
+
+    // Detect when marquee has completed one cycle (scrolls back to start)
+    if (lastScrollLeft > 0 && currentScrollLeft === 0 && !marqueeChangeScheduled) {
+      marqueeChangeScheduled = true;
+      // Wait a tiny bit to ensure text is fully off screen before changing
+      setTimeout(() => {
+        changeMarqueeText();
+        marqueeChangeScheduled = false;
+      }, 100);
     }
-  }, scrollTime);
+
+    lastScrollLeft = currentScrollLeft;
+  }, 100);
 }
 
 function changeMarqueeText() {
   const marquee = document.getElementById('scrolling-marquee');
   if (!marquee) return;
 
-  // Pick a random message
-  let newMessage = marqueeMessages[Math.floor(Math.random() * marqueeMessages.length)];
+  // Pick a random message (different from current if possible)
+  const currentText = marquee.innerHTML;
+  let newMessage;
 
-  // Replace <VISITOR> placeholder with actual visit count
-  const visitCount = localStorage.getItem('siteVisitCount') || '1337';
-  newMessage = newMessage.replace('<VISITOR>', visitCount);
+  do {
+    newMessage = marqueeMessages[Math.floor(Math.random() * marqueeMessages.length)];
+    const visitCount = localStorage.getItem('siteVisitCount') || '1337';
+    newMessage = newMessage.replace('<VISITOR>', visitCount);
+  } while (newMessage === currentText && marqueeMessages.length > 1);
 
   // Update the marquee content
   marquee.innerHTML = newMessage;
