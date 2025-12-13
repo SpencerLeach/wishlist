@@ -599,34 +599,29 @@ const marqueeMessages = [
   '~~ Wave ~~ ~~ Wave ~~ Ocean sounds... Relaxing... ~~ Wave ~~'
 ];
 
-let lastMessageIndex = -1;
-
 function initRandomMarquee() {
   const marquee = document.getElementById('scrolling-marquee');
   if (!marquee) return;
 
-  // Change message every 30 seconds (generous timing to let each message complete)
+  // Change message every 15 seconds for variety
   setInterval(() => {
     changeMarqueeText();
-  }, 30000);
+  }, 15000);
 }
 
 function changeMarqueeText() {
   const marquee = document.getElementById('scrolling-marquee');
   if (!marquee) return;
 
-  // Pick a random message index (different from last one)
-  let newIndex;
+  // Pick a random message (different from current if possible)
+  const currentText = marquee.innerHTML;
+  let newMessage;
+
   do {
-    newIndex = Math.floor(Math.random() * marqueeMessages.length);
-  } while (newIndex === lastMessageIndex && marqueeMessages.length > 1);
-
-  lastMessageIndex = newIndex;
-
-  // Get message and replace visitor count
-  let newMessage = marqueeMessages[newIndex];
-  const visitCount = localStorage.getItem('siteVisitCount') || '1337';
-  newMessage = newMessage.replace('<VISITOR>', visitCount);
+    newMessage = marqueeMessages[Math.floor(Math.random() * marqueeMessages.length)];
+    const visitCount = localStorage.getItem('siteVisitCount') || '1337';
+    newMessage = newMessage.replace('<VISITOR>', visitCount);
+  } while (newMessage === currentText && marqueeMessages.length > 1);
 
   // Update the marquee content
   marquee.innerHTML = newMessage;
