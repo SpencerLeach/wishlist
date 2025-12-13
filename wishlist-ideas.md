@@ -33,3 +33,4 @@
 - Mastering Positional Chess by Daniel Naroditsky ($25) - Chess
 - Mastering Complex Endgames by Daniel Naroditsky ($28) - Chess
 - Sony ULT Field 7 Bluetooth Speaker ($399) - Tech/Audio
+- Oakywood Wooden Headphone Stand Walnut (~$70) - Tech/Desk
