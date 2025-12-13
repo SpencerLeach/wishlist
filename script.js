@@ -192,49 +192,47 @@ function initWindowControls() {
   // Close button - Easter egg
   if (closeBtn) {
     closeBtn.addEventListener('click', function() {
-      if (confirm('Are you sure you want to close this window?')) {
-        document.body.innerHTML = `
+      document.body.innerHTML = `
+        <div style="
+          background: #5A7EBF;
+          color: white;
+          padding: 40px;
+          font-family: Tahoma, Verdana, sans-serif;
+          text-align: center;
+          font-size: 14px;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        ">
           <div style="
-            background: #5A7EBF;
-            color: white;
-            padding: 40px;
-            font-family: Tahoma, Verdana, sans-serif;
-            text-align: center;
-            font-size: 14px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+            background: white;
+            color: black;
+            padding: 20px 30px;
+            border: 3px solid;
+            border-color: #FFFFFF #716F64 #716F64 #FFFFFF;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            max-width: 400px;
           ">
-            <div style="
-              background: white;
-              color: black;
-              padding: 20px 30px;
-              border: 3px solid;
-              border-color: #FFFFFF #716F64 #716F64 #FFFFFF;
-              box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-              max-width: 400px;
-            ">
-              <h1 style="margin: 0 0 15px 0; font-size: 16px;">Window Closed</h1>
-              <p style="margin: 10px 0; font-size: 11px;">Thank you for visiting my wishlist!</p>
-              <p style="margin: 10px 0; font-size: 11px;">Press F5 or click Refresh to return.</p>
-              <div style="text-align: center; margin-top: 20px;">
-                <button onclick="location.reload()" style="
-                  font-family: Tahoma, Verdana, sans-serif;
-                  font-size: 11px;
-                  padding: 4px 12px;
-                  background: #ECE9D8;
-                  border: 2px solid;
-                  border-color: #FFFFFF #716F64 #716F64 #FFFFFF;
-                  cursor: pointer;
-                  min-width: 80px;
-                ">[ OK ]</button>
-              </div>
+            <h1 style="margin: 0 0 15px 0; font-size: 16px;">Window Closed</h1>
+            <p style="margin: 10px 0; font-size: 11px;">Thank you for visiting my wishlist!</p>
+            <p style="margin: 10px 0; font-size: 11px;">Press F5 or click Refresh to return.</p>
+            <div style="text-align: center; margin-top: 20px;">
+              <button onclick="location.reload()" style="
+                font-family: Tahoma, Verdana, sans-serif;
+                font-size: 11px;
+                padding: 4px 12px;
+                background: #ECE9D8;
+                border: 2px solid;
+                border-color: #FFFFFF #716F64 #716F64 #FFFFFF;
+                cursor: pointer;
+                min-width: 80px;
+              ">[ OK ]</button>
             </div>
           </div>
-        `;
-      }
+        </div>
+      `;
     });
   }
 }
