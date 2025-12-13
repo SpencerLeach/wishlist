@@ -4,14 +4,16 @@
 // Store wishlist items globally
 let wishlistItems = [];
 let throbberInterval = null;
+let throbberStartTime = null;
 
 // Load wishlist data when page loads
 document.addEventListener('DOMContentLoaded', function() {
   loadWishlist();
   loadGuestbook();
   setLastUpdated();
-  randomizeVisitorCount();
+  trackSiteVisit();
   initWindowControls();
+  initRandomMarquee();
   startThrobber();
 });
 
@@ -20,6 +22,7 @@ const throbberFrames = ['|', '/', '-', '\\'];
 let throbberIndex = 0;
 
 function startThrobber() {
+  throbberStartTime = Date.now();
   const throbberEl = document.getElementById('loading-throbber');
   if (throbberEl) {
     throbberInterval = setInterval(() => {
@@ -31,8 +34,15 @@ function startThrobber() {
 
 function stopThrobber() {
   if (throbberInterval) {
-    clearInterval(throbberInterval);
-    throbberInterval = null;
+    // Keep throbber visible for at least 800ms so it's actually visible
+    const elapsed = Date.now() - throbberStartTime;
+    const minDisplayTime = 800;
+    const delay = Math.max(0, minDisplayTime - elapsed);
+
+    setTimeout(() => {
+      clearInterval(throbberInterval);
+      throbberInterval = null;
+    }, delay);
   }
 }
 
@@ -138,21 +148,30 @@ function setLastUpdated() {
   }
 }
 
-// Randomize visitor count for authentic feel
-function randomizeVisitorCount() {
-  const baseCount = 1337;
-  const randomAdd = Math.floor(Math.random() * 500);
-  const visitorCount = baseCount + randomAdd;
+// Track actual site visits using localStorage
+function trackSiteVisit() {
+  // Get or initialize visit count
+  let visitCount = localStorage.getItem('siteVisitCount');
 
-  // Update both visitor count locations
+  if (!visitCount) {
+    // First time visitor - start from a retro number
+    visitCount = 1337;
+  } else {
+    visitCount = parseInt(visitCount) + 1;
+  }
+
+  // Save the new count
+  localStorage.setItem('siteVisitCount', visitCount);
+
+  // Update both locations
   const countEl = document.getElementById('visitor-count');
   const countStatusEl = document.getElementById('visitor-count-status');
 
   if (countEl) {
-    countEl.textContent = visitorCount;
+    countEl.textContent = visitCount;
   }
   if (countStatusEl) {
-    countStatusEl.textContent = visitorCount;
+    countStatusEl.textContent = visitCount;
   }
 }
 
@@ -455,4 +474,69 @@ async function saveCanvas() {
   } catch (error) {
     console.error('Error saving canvas:', error);
   }
+}
+
+// ==================== RANDOM MARQUEE MESSAGES ====================
+
+const marqueeMessages = [
+  '♥ Welcome to my wishlist page! ♥ Thanks for stopping by! ♥ Pick something nice for me! ♥',
+  '*** Under Construction *** Site best viewed in 800x600 *** GeoCities Approved ***',
+  'You are visitor #<VISITOR>! *** Thanks for visiting! *** Sign my guestbook!',
+  '=^..^= <--- Cat walking across your screen =^..^=',
+  '<:3)~~~ <--- Mouse scurrying by <:3)~~~',
+  '---{ ======= Spaceship flying ======= }---',
+  '\\o/ \\o/ \\o/ Wave to your screen! \\o/ \\o/ \\o/',
+  '(>")> <(\"<) <(")> Kirby dance party! (>")> <(\"<)',
+  '*** FREE STUFF *** Just kidding, but seriously, gift ideas here! ***',
+  '(..)  (...) (sleep) Zzz... ASCII sheep counting... Zzz...',
+  '<o)))>< Fish swimming by <o)))><  ~~ ~~ ~~',
+  '*** NEW ITEMS ADDED *** Check out the latest additions! ***',
+  '@>-->-- Rose for you @>-->-- Hope you find something nice! @>-->--',
+  '=^_^= Nyan cat says: Meow! Pick a gift! =^_^=',
+  '*** UPDATED DAILY *** Well, almost daily *** OK, sometimes ***',
+  '(\_/) (\\_/) Bunnies hopping through (\\=/,=/) (\\=/,=/) (\\=/,=/)',
+  '>>> SCROLL TEXT SIMULATOR 2003 <<< Authentic Retro Vibes >>>',
+  '<@:) <@:) Penguins waddling past <@:) <@:)',
+  '*** WebRing Member *** Check out cool sites! *** Geocities Forever ***',
+  '~~ Wave ~~ ~~ Wave ~~ Ocean sounds... Relaxing... ~~ Wave ~~'
+];
+
+let hasScrolledOnce = false;
+
+function initRandomMarquee() {
+  const marquee = document.getElementById('scrolling-marquee');
+  if (!marquee) return;
+
+  // Listen for when marquee finishes one loop
+  marquee.addEventListener('finish', changeMarqueeText);
+
+  // Marquee doesn't have a native 'finish' event, so we'll use a timer
+  // Calculate approximate scroll time and set interval
+  const marqueeWidth = marquee.offsetWidth;
+  const contentWidth = marquee.scrollWidth;
+  const scrollSpeed = 6; // Default marquee speed in pixels per iteration
+  const scrollTime = ((marqueeWidth + contentWidth) / scrollSpeed) * 16; // ~16ms per frame
+
+  setInterval(() => {
+    if (hasScrolledOnce) {
+      changeMarqueeText();
+    } else {
+      hasScrolledOnce = true;
+    }
+  }, scrollTime);
+}
+
+function changeMarqueeText() {
+  const marquee = document.getElementById('scrolling-marquee');
+  if (!marquee) return;
+
+  // Pick a random message
+  let newMessage = marqueeMessages[Math.floor(Math.random() * marqueeMessages.length)];
+
+  // Replace <VISITOR> placeholder with actual visit count
+  const visitCount = localStorage.getItem('siteVisitCount') || '1337';
+  newMessage = newMessage.replace('<VISITOR>', visitCount);
+
+  // Update the marquee content
+  marquee.innerHTML = newMessage;
 }

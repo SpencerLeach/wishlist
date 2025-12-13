@@ -413,7 +413,7 @@ header {
 }
 
 .guestbook-canvas {
-  background: #000022; /* Classic dark terminal blue */
+  background: #FFFFFF; /* White like Notepad */
   border: 2px inset var(--xp-button-shadow);
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
@@ -427,7 +427,7 @@ header {
   position: relative;
   overflow-x: auto;
   white-space: pre;
-  color: #00FF00; /* Green terminal text */
+  color: #000000; /* Black text like Notepad */
 }
 
 .guestbook-canvas:focus {
@@ -436,7 +436,7 @@ header {
 
 .canvas-cursor {
   position: absolute;
-  background: #00FF00;
+  background: #000000;
   width: 8px;
   height: 16px;
   animation: cursor-blink 0.8s step-end infinite;
