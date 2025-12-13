@@ -515,7 +515,7 @@ const marqueeMessages = [
   '\\o/ \\o/ \\o/ Wave to your screen! \\o/ \\o/ \\o/',
   '(>")> <(\"<) <(")> Kirby dance party! (>")> <(\"<)',
   '*** FREE STUFF *** Just kidding, but seriously, gift ideas here! ***',
-  '(..)  (...) (sleep) Zzz... ASCII sheep counting... Zzz...',
+  '(..) (..) (..) Counting sheep to help you relax... (..) (..) Zzz...',
   '<o)))>< Fish swimming by <o)))><  ~~ ~~ ~~',
   '*** NEW ITEMS ADDED *** Check out the latest additions! ***',
   '@>-->-- Rose for you @>-->-- Hope you find something nice! @>-->--',
@@ -532,10 +532,34 @@ function initRandomMarquee() {
   const marquee = document.getElementById('scrolling-marquee');
   if (!marquee) return;
 
-  // Change message every 15 seconds for variety
-  setInterval(() => {
-    changeMarqueeText();
-  }, 15000);
+  // Calculate scroll duration and schedule next message change
+  function scheduleNextMessage() {
+    // Marquee default: scrollamount=6, scrolldelay=85ms
+    const scrollAmount = 6;
+    const scrollDelay = 85;
+
+    // Get dimensions
+    const marqueeWidth = marquee.offsetWidth;
+    const contentWidth = marquee.scrollWidth;
+
+    // Total distance = container width + content width (text must fully exit)
+    const totalDistance = marqueeWidth + contentWidth;
+
+    // Calculate time in milliseconds
+    const scrollDuration = (totalDistance / scrollAmount) * scrollDelay;
+
+    // Add small buffer to ensure text is fully off screen
+    const bufferTime = 500;
+
+    // Schedule message change after current one finishes
+    setTimeout(() => {
+      changeMarqueeText();
+      scheduleNextMessage(); // Schedule the next one
+    }, scrollDuration + bufferTime);
+  }
+
+  // Start the cycle
+  scheduleNextMessage();
 }
 
 function changeMarqueeText() {
