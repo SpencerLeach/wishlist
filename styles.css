@@ -27,15 +27,17 @@
 body {
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 11px;
-  /* Bliss wallpaper - blue sky with gentle green hill at bottom */
+  /* Bliss wallpaper - bright blue sky with rolling green hill */
   background: linear-gradient(to bottom,
-    #4D9DE0 0%,
-    #5BA3E0 20%,
-    #6DB3E8 40%,
-    #79C3F0 60%,
-    #8FD5A8 80%,
-    #7AC142 90%,
-    #6FB337 100%
+    #3A96DD 0%,
+    #4DA4E3 30%,
+    #5DB0E8 60%,
+    #6BB8ED 65%,
+    #7EC856 68%,
+    #8DD15F 75%,
+    #82C74C 85%,
+    #5A9A3C 95%,
+    #2D5016 100%
   );
   background-attachment: fixed;
   color: var(--xp-text);
