@@ -421,7 +421,7 @@ async function loadGuestbook() {
   initCanvasGrid();
 
   try {
-    const response = await fetch('guestbook.php');
+    const response = await fetch('/wishlist/guestbook.php');
     if (response.ok) {
       const data = await response.json();
       if (data.grid && Array.isArray(data.grid)) {
@@ -562,7 +562,7 @@ function scheduleAutoSave() {
 // Save canvas to server
 async function saveCanvas() {
   try {
-    const response = await fetch('guestbook.php', {
+    const response = await fetch('/wishlist/guestbook.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ grid: canvasGrid })
