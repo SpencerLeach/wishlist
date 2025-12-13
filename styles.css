@@ -27,14 +27,20 @@
 body {
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 11px;
-  /* Bliss wallpaper inspired gradient - blue sky with green hill */
-  background: linear-gradient(to bottom,
-    #5A7EBF 0%,
-    #5A7EBF 60%,
-    #6BA854 60%,
-    #7BC24A 75%,
-    #6BA854 100%
-  );
+  /* Bliss wallpaper inspired gradient - rolling green hills against blue sky */
+  background:
+    radial-gradient(ellipse 1500px 400px at 50% 70%,
+      #8BC34A 0%,
+      #7CB342 30%,
+      #689F38 60%,
+      #558B2F 100%),
+    linear-gradient(to bottom,
+      #4A90E2 0%,
+      #5A9FDB 40%,
+      #6AADD4 65%,
+      #7BC24A 85%,
+      #8BC34A 100%
+    );
   background-attachment: fixed;
   color: var(--xp-text);
   padding: 20px 20px 60px 20px; /* Extra bottom padding for taskbar */

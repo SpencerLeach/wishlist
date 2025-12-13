@@ -508,7 +508,7 @@ function updateTaskbarClock() {
 const marqueeMessages = [
   '♥ Welcome to my wishlist page! ♥ Thanks for stopping by! ♥ Pick something nice for me! ♥',
   '*** Under Construction *** Site best viewed in 800x600 *** GeoCities Approved ***',
-  'You are visitor #<VISITOR>! *** Thanks for visiting! *** Sign my guestbook!',
+  'This is site visit #<VISITOR>! *** Thanks for visiting! *** Sign my guestbook!',
   '=^..^= <--- Cat walking across your screen =^..^=',
   '<:3)~~~ <--- Mouse scurrying by <:3)~~~',
   '---{ ======= Spaceship flying ======= }---',
