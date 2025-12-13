@@ -528,33 +528,14 @@ const marqueeMessages = [
   '~~ Wave ~~ ~~ Wave ~~ Ocean sounds... Relaxing... ~~ Wave ~~'
 ];
 
-let marqueeChangeScheduled = false;
-
 function initRandomMarquee() {
   const marquee = document.getElementById('scrolling-marquee');
   if (!marquee) return;
 
-  // Use MutationObserver to detect when marquee has scrolled
-  // We'll check the scroll position periodically
-  let lastScrollLeft = marquee.scrollLeft;
-
+  // Change message every 15 seconds for variety
   setInterval(() => {
-    // When marquee resets to beginning, its scrollLeft becomes 0 or near 0
-    // This happens after text scrolls completely off screen to the left
-    const currentScrollLeft = marquee.scrollLeft;
-
-    // Detect when marquee has completed one cycle (scrolls back to start)
-    if (lastScrollLeft > 0 && currentScrollLeft === 0 && !marqueeChangeScheduled) {
-      marqueeChangeScheduled = true;
-      // Wait a tiny bit to ensure text is fully off screen before changing
-      setTimeout(() => {
-        changeMarqueeText();
-        marqueeChangeScheduled = false;
-      }, 100);
-    }
-
-    lastScrollLeft = currentScrollLeft;
-  }, 100);
+    changeMarqueeText();
+  }, 15000);
 }
 
 function changeMarqueeText() {
