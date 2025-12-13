@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initWindowControls();
   initRandomMarquee();
   initTaskbarClock();
+  initMenuSounds();
   startThrobber();
 });
 
@@ -173,6 +174,76 @@ function trackSiteVisit() {
   }
   if (countStatusEl) {
     countStatusEl.textContent = visitCount;
+  }
+}
+
+// ==================== MENU BAR SOUNDS ====================
+
+let audioContext = null;
+let currentOscillator = null;
+let currentGain = null;
+
+// Pentatonic scale frequencies (C D E G A in Hz)
+const pentatonicScale = [261.63, 293.66, 329.63, 392.00, 440.00];
+
+function initMenuSounds() {
+  const menuItems = document.querySelectorAll('.xp-menu-item');
+
+  menuItems.forEach((item, index) => {
+    // Use modulo to cycle through pentatonic scale
+    const frequency = pentatonicScale[index % pentatonicScale.length];
+
+    item.addEventListener('mousedown', () => {
+      playSawWave(frequency);
+    });
+
+    item.addEventListener('mouseup', () => {
+      stopSawWave();
+    });
+
+    item.addEventListener('mouseleave', () => {
+      stopSawWave();
+    });
+  });
+}
+
+function playSawWave(frequency) {
+  // Stop any currently playing sound
+  stopSawWave();
+
+  // Create audio context if needed
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  // Create oscillator and gain nodes
+  currentOscillator = audioContext.createOscillator();
+  currentGain = audioContext.createGain();
+
+  // Configure sawtooth wave
+  currentOscillator.type = 'sawtooth';
+  currentOscillator.frequency.value = frequency;
+
+  // Set volume (not too loud)
+  currentGain.gain.value = 0.15;
+
+  // Connect nodes: oscillator -> gain -> destination
+  currentOscillator.connect(currentGain);
+  currentGain.connect(audioContext.destination);
+
+  // Start playing
+  currentOscillator.start();
+}
+
+function stopSawWave() {
+  if (currentOscillator) {
+    currentOscillator.stop();
+    currentOscillator.disconnect();
+    currentOscillator = null;
+  }
+  if (currentGain) {
+    currentGain.disconnect();
+    currentGain = null;
   }
 }
 
