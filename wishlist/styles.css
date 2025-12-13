@@ -29,6 +29,22 @@
 body {
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 11px;
+  color: var(--xp-text);
+  padding: 20px 20px 60px 20px; /* Extra bottom padding for taskbar */
+  cursor: default;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Blurred desktop background behind window */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
   /* Bliss wallpaper - bright blue sky with rolling green hill and clouds */
   background:
     /* Soft fluffy clouds */
@@ -56,10 +72,8 @@ body {
       #2D5016 100%
     );
   background-attachment: fixed;
-  color: var(--xp-text);
-  padding: 20px 20px 60px 20px; /* Extra bottom padding for taskbar */
-  cursor: default;
-  min-height: 100vh;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 }
 
 /* ==== XP Window ==== */
@@ -70,6 +84,8 @@ body {
   border: 3px solid;
   border-color: var(--xp-button-highlight) var(--xp-button-dark-shadow) var(--xp-button-dark-shadow) var(--xp-button-highlight);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
 }
 
 /* ==== Title Bar ==== */
