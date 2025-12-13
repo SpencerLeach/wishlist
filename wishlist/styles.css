@@ -83,16 +83,14 @@ body::after {
   right: 0;
   bottom: 0;
   z-index: -1;
-  /* Folder blobs positioned like desktop icons */
+  /* Folder blobs positioned like desktop icons - fixed positions, low opacity */
   background:
     /* Wishlist folder - yellow */
-    radial-gradient(ellipse 60px 80px at 40px 60px, #FFD835 0%, #FFB300 50%, transparent 70%),
+    radial-gradient(ellipse 60px 80px at 40px 60px, rgba(255, 216, 53, 0.4) 0%, rgba(255, 179, 0, 0.3) 50%, transparent 70%),
     /* Projects folder - blue */
-    radial-gradient(ellipse 60px 80px at 40px 180px, #42A5F5 0%, #1976D2 50%, transparent 70%),
+    radial-gradient(ellipse 60px 80px at 40px 180px, rgba(66, 165, 245, 0.4) 0%, rgba(25, 118, 210, 0.3) 50%, transparent 70%),
     /* About folder - green */
-    radial-gradient(ellipse 60px 80px at 40px 300px, #66BB6A 0%, #388E3C 50%, transparent 70%),
-    /* Phillip's house - skin tone blob */
-    radial-gradient(ellipse 60px 80px at calc(100vw - 60px) calc(100vh - 140px), #E8B4A0 0%, #D4A090 50%, transparent 70%);
+    radial-gradient(ellipse 60px 80px at 40px 300px, rgba(102, 187, 106, 0.4) 0%, rgba(56, 142, 60, 0.3) 50%, transparent 70%);
   filter: blur(20px);
   -webkit-filter: blur(20px);
 }
