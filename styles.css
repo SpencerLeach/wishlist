@@ -22,6 +22,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Better tap highlighting on mobile */
+  -webkit-tap-highlight-color: rgba(60, 142, 243, 0.3);
 }
 
 body {
@@ -633,12 +635,62 @@ footer {
 }
 
 /* ==== Responsive (maintain XP feel) ==== */
+
+/* Tablets and small laptops */
+@media (max-width: 900px) {
+  .xp-window {
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* Mobile phones */
 @media (max-width: 600px) {
+  body {
+    font-size: 14px;
+    padding: 10px 10px 80px 10px; /* More bottom padding for taskbar on mobile */
+  }
+
   .xp-window {
     margin: 0;
     border-width: 2px;
   }
 
+  /* Make title bar touch-friendly */
+  .xp-titlebar {
+    height: 36px;
+    padding: 5px;
+  }
+
+  .xp-title {
+    font-size: 14px;
+  }
+
+  /* Larger touch targets for window controls */
+  .xp-btn {
+    width: 32px;
+    height: 28px;
+    font-size: 18px;
+  }
+
+  /* Make menu items touch-friendly */
+  .xp-menu-item {
+    padding: 8px 12px;
+    font-size: 14px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .xp-menubar {
+    padding: 5px;
+  }
+
+  /* Single column grid */
   .wishlist-grid {
     grid-template-columns: 1fr;
   }
@@ -648,13 +700,157 @@ footer {
     max-height: none;
   }
 
+  /* Touch-friendly navigation buttons */
   .nav-buttons {
     flex-direction: column;
     align-items: stretch;
+    gap: 15px;
   }
 
   .xp-button {
     width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+
+  /* Larger text for readability */
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .item-name {
+    font-size: 16px;
+  }
+
+  .item-description {
+    font-size: 14px;
+  }
+
+  .item-price {
+    font-size: 16px;
+  }
+
+  .item-link {
+    font-size: 14px;
+    padding: 10px 16px;
+    min-height: 44px;
+  }
+
+  /* Guestbook adjustments */
+  .guestbook-canvas {
+    font-size: 16px;
+    min-height: 250px;
+  }
+
+  .canvas-instructions {
+    font-size: 14px;
+  }
+
+  /* Taskbar mobile-friendly */
+  .xp-taskbar {
+    height: 56px;
+    padding: 0 8px;
+  }
+
+  .xp-start-button {
+    height: 44px;
+    font-size: 14px;
+    padding: 0 16px 0 12px;
+  }
+
+  .start-logo {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+  }
+
+  .xp-taskbar-items {
+    height: 44px;
+    margin-left: 8px;
+  }
+
+  .xp-taskbar-item {
+    font-size: 13px;
+    padding: 0 12px;
+  }
+
+  .xp-system-tray {
+    height: 44px;
+    font-size: 13px;
+    padding: 0 12px;
+  }
+
+  .xp-clock {
+    font-size: 13px;
+  }
+
+  /* Status bar */
+  .xp-statusbar {
+    font-size: 13px;
+    height: 32px;
+    padding: 5px;
+  }
+
+  .status-section {
+    padding: 0 8px;
+  }
+
+  /* Marquee */
+  .marquee-banner {
+    font-size: 13px;
+  }
+
+  /* Footer */
+  footer {
+    font-size: 13px;
+  }
+
+  /* Make interests box more readable */
+  .interests-box {
+    font-size: 14px;
+  }
+
+  /* Prevent iOS text size adjustment */
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Make input elements more touch-friendly if any are added */
+  input, textarea, select {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Smoother scrolling on mobile */
+  .xp-content {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide horizontal scrollbars that might appear */
+  .xp-window {
+    overflow-x: hidden;
+  }
+
+  /* Maximized state on mobile */
+  .xp-window.maximized {
+    height: 100vh;
+    max-height: 100vh;
+    border: none;
+  }
+
+  .xp-window.maximized .xp-content {
+    max-height: calc(100vh - 150px); /* Account for larger mobile UI elements */
+  }
+
+  /* Better guestbook interaction on mobile */
+  .guestbook-canvas {
+    -webkit-user-select: text;
+    user-select: text;
+    touch-action: manipulation;
   }
 }
 

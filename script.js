@@ -193,6 +193,7 @@ function initMenuSounds() {
     // Use modulo to cycle through pentatonic scale
     const frequency = pentatonicScale[index % pentatonicScale.length];
 
+    // Mouse events
     item.addEventListener('mousedown', () => {
       playSawWave(frequency);
     });
@@ -202,6 +203,21 @@ function initMenuSounds() {
     });
 
     item.addEventListener('mouseleave', () => {
+      stopSawWave();
+    });
+
+    // Touch events for mobile
+    item.addEventListener('touchstart', (e) => {
+      e.preventDefault(); // Prevent mouse events from firing
+      playSawWave(frequency);
+    });
+
+    item.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      stopSawWave();
+    });
+
+    item.addEventListener('touchcancel', () => {
       stopSawWave();
     });
   });
