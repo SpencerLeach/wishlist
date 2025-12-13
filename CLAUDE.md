@@ -4,17 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Y2K-themed (early 2000s retro aesthetic) personal wishlist website. The site features a nostalgic design with rainbow gradients, sparkle cursor effects, marquee banners, and an interactive guestbook canvas where visitors can leave messages.
+This is sleach.me - Spencer's personal portfolio site with a Windows XP desktop aesthetic. The site features a desktop landing page with clickable folder icons that navigate to different sections. Currently implemented: Wishlist page. Coming soon: Projects, About Me.
 
 ## Architecture
 
-### Core Files
-- **index.html** - Single-page application with static HTML structure
-- **styles.css** - Y2K-themed CSS with rainbow gradients, animations, and retro effects
-- **script.js** - Client-side JavaScript handling wishlist rendering, filtering, guestbook canvas, and visual effects
+### Site Structure
+```
+/                    → Desktop landing page (index.html)
+/wishlist/           → Wishlist page (subfolder)
+/projects/           → (Coming soon)
+/about/              → (Coming soon)
+```
+
+### Root Files
+- **index.html** - Windows XP desktop landing page with folder icons and taskbar
+  - Bliss wallpaper background with clouds and rolling hills
+  - Desktop icons linking to subpages
+  - XP taskbar with Start button and clock
+  - Aggressive preloading for instant navigation
+
+### Wishlist Files (/wishlist/)
+- **index.html** - XP window-styled wishlist page
+- **styles.css** - Windows XP Luna theme CSS with blue/beige color palette
+- **script.js** - Client-side JavaScript for wishlist, guestbook, menu sounds, window controls
 - **guestbook.php** - Server-side PHP API for persisting guestbook canvas data
-- **wishlist-data.json** - JSON array of wishlist items with priority levels (high/medium/low)
-- **guestbook-data.json** - Server-generated file storing guestbook canvas grid state (created at runtime)
+- **wishlist-data.json** - JSON array of wishlist items with priority levels
+- **guestbook-data.json** - Server-generated file storing guestbook canvas grid state
 
 ### Data Flow
 
@@ -32,17 +47,29 @@ This is a Y2K-themed (early 2000s retro aesthetic) personal wishlist website. Th
 
 ### Key Features
 
-**Visual Effects:**
-- Sparkle cursor trail (`initSparkleTrail()`)
-- Rainbow text animation on header
-- Hover effects with scale transforms and glow
-- Konami code easter egg (↑↑↓↓←→←→BA) activates rainbow background animation
+**Desktop Landing Page:**
+- Windows XP Bliss wallpaper (blue sky with clouds and rolling green hills)
+- Clickable folder icons with XP styling and hover effects
+- Functional XP taskbar with Start button and live clock
+- Aggressive preloading (prefetch tags + hover preload + idle preload)
+- Fully mobile-responsive with touch-friendly icon sizes
 
-**Interactive Elements:**
-- Priority-based filtering buttons
-- Randomized visitor counter (1337 + random)
-- Guestbook canvas with visual cursor and keyboard navigation
-- Auto-updating "last updated" date in footer
+**Wishlist Page:**
+- Full XP window chrome (title bar, menu bar, status bar)
+- Functional window controls (minimize, maximize, close)
+- Menu bar sounds: Each menu item plays a sawtooth wave note on mousedown/touch
+  - File = C, Edit = D, View = E, Favorites = G, Help = A (pentatonic scale)
+- Priority-based wishlist filtering
+- Working site visit counter (localStorage-based, starts at 1337)
+- Random rotating marquee messages with ASCII art animals
+- ASCII throbber for loading states
+- Konami code easter egg (↑↑↓↓←→←→BA) shows XP system info alert
+
+**Guestbook Canvas:**
+- Character-based drawing canvas (60 cols × 18 rows)
+- Click to position cursor, type to draw, backspace to delete
+- Auto-saves to server after 1 second of inactivity
+- XP Notepad styling (white background, black text)
 
 ## Development
 
@@ -80,10 +107,15 @@ Priority levels determine badge styling and filtering behavior.
 
 ### Styling Conventions
 
-- Y2K aesthetic with neon colors defined in CSS variables (`--pink`, `--cyan`, `--yellow`, etc.)
-- Comic Sans-inspired font stack (`'Comic Neue'`, `'Comic Sans MS'`)
-- Heavy use of gradients, ridge/groove/inset borders, and glow effects
-- Maintain nostalgic elements: marquee, blink animation, "under construction" messaging
+**Windows XP Luna Theme:**
+- Blue/beige color palette defined in CSS variables
+  - `--xp-blue-light: #3C8EF3`, `--xp-blue-dark: #0058E6`
+  - `--xp-button-face: #ECE9D8` (beige)
+- Tahoma/Verdana font stack (authentic XP fonts)
+- 3D button effects using border-color tricks (raised/inset)
+- Bliss wallpaper gradient (blue sky → green hill)
+- No modern CSS3 effects (no border-radius except where XP had it)
+- Maintain XP elements: window chrome, taskbar, desktop icons, folder styling
 
 ### Guestbook System
 
@@ -96,6 +128,28 @@ The canvas uses a 2D character array (`canvasGrid[y][x]`) where:
 ## File Structure Conventions
 
 - No build process required - vanilla HTML/CSS/JS
-- Images referenced via external URLs (no local images directory currently exists)
-- Data files (`wishlist-data.json`, `guestbook-data.json`) live in root directory
-- Single-page architecture - all content on `index.html`
+- Multi-page architecture with subfolder structure
+- Desktop landing page at root (`/`)
+- Each section in its own subfolder (`/wishlist/`, `/projects/`, etc.)
+- Images referenced via external URLs (no local images directory)
+- Data files live in their respective subfolders
+- Window controls (X button) navigate back to desktop (`/`)
+
+## Navigation Flow
+
+```
+Desktop (/)
+  ↓ Click folder icon
+Wishlist (/wishlist/)
+  ↓ Click X button
+Desktop (/)
+```
+
+## Preloading Strategy
+
+The desktop landing page uses aggressive preloading:
+1. **HTML prefetch tags** - Browser prefetches resources in background
+2. **Hover preloading** - Fetch page when hovering over icon
+3. **Idle preloading** - Fetch after 1 second of inactivity
+
+This ensures sub-100ms navigation times for excellent UX.
