@@ -454,12 +454,21 @@ function renderCanvas() {
     if (y < CANVAS_ROWS - 1) content += '\n';
   }
 
-  canvas.textContent = content;
+  // Use a text node so we don't destroy other children
+  let textNode = canvas.querySelector('.canvas-text');
+  if (!textNode) {
+    textNode = document.createElement('span');
+    textNode.className = 'canvas-text';
+    canvas.insertBefore(textNode, canvas.firstChild);
+  }
+  textNode.textContent = content;
 
-  // Add cursor
+  // Add cursor (create if needed, always re-append to ensure it's in DOM)
   if (!cursorElement) {
     cursorElement = document.createElement('div');
     cursorElement.className = 'canvas-cursor';
+  }
+  if (!canvas.contains(cursorElement)) {
     canvas.appendChild(cursorElement);
   }
   updateCursorPosition();
